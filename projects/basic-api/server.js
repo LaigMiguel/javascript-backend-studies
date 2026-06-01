@@ -18,7 +18,7 @@ app.get('/users', (req, res) => {
 })
 
 app.get('/users/count', (req, res) => {
-  count = users.length
+  const count = users.length
   res.json(count)
 })
 
