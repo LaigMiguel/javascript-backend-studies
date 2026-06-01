@@ -17,6 +17,11 @@ app.get('/users', (req, res) => {
   res.json(users)
 })
 
+app.get('/users/count', (req, res) => {
+  count = users.length
+  res.json(count)
+})
+
 app.get('/users/:id', (req, res) => {
   const reqId = Number(req.params.id)
 
