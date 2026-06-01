@@ -2,10 +2,19 @@ const express = require('express')
 
 const app = express()
 
-app.get('/', (req, res) => {
+const users = [
+  { id: 1, name: 'João' },
+  { id: 2, name: 'Maria' },
+]
+
+app.get('/health', (req, res) => {
   res.json({
-    message: 'API funcionando',
+    status: 'ok',
   })
+})
+
+app.get('/users', (req, res) => {
+  res.json(users)
 })
 
 app.listen(3000, () => {
