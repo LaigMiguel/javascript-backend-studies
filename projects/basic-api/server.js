@@ -51,6 +51,27 @@ app.post('/users', (req, res) => {
   res.json(newUser)
 })
 
+app.put('/users/:id', (req, res) => {
+  const reqId = Number(req.params.id)
+  const { name } = req.body
+
+  const user = users.find((user) => user.id === reqId)
+
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' })
+  }
+
+  if (typeof name !== 'string' || name.trim() === '') {
+    return res
+      .status(400)
+      .json({ message: 'Name field is required and cannot be empty' })
+  }
+
+  user.name = name
+
+  res.json(user)
+})
+
 app.listen(3000, () => {
   console.log('Servidor rodando na porta 3000')
 })
