@@ -4,7 +4,7 @@ const app = express()
 
 app.use(express.json())
 
-const users = [
+let users = [
   { id: 1, name: 'João' },
   { id: 2, name: 'Maria' },
 ]
@@ -70,6 +70,20 @@ app.put('/users/:id', (req, res) => {
   user.name = name
 
   res.json(user)
+})
+
+app.delete('/users/:id', (req, res) => {
+  const id = Number(req.params.id)
+
+  const user = users.find((user) => user.id === id)
+
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' })
+  }
+
+  users = users.filter((user) => user.id !== id)
+
+  return res.status(204).send()
 })
 
 app.listen(3000, () => {
