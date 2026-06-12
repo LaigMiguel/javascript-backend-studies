@@ -11,6 +11,7 @@ app.use('/users', usersRouter)
 app.get('/health', (req, res) => {
   res.json({
     status: 'ok',
+    message: 'API is running',
   })
 })
 
