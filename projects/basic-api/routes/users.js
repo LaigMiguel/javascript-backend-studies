@@ -14,6 +14,11 @@ router.get('/count', (req, res) => {
   const count = users.length
   res.json(count)
 })
+router.get('/names', (req, res) => {
+  const names = users.map((user) => user.name)
+
+  res.json(names)
+})
 
 router.get('/:id', (req, res) => {
   const reqId = Number(req.params.id)
