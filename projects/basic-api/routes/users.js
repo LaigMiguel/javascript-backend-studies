@@ -1,14 +1,10 @@
 const express = require('express')
 const router = express.Router()
 
-let users = [
-  { id: 1, name: 'João' },
-  { id: 2, name: 'Maria' },
-]
+const users = require('../data/users')
+const userController = require('../controllers/userController')
 
-router.get('/', (req, res) => {
-  res.json(users)
-})
+router.get('/', userController.getUsers)
 
 router.get('/count', (req, res) => {
   const count = users.length
