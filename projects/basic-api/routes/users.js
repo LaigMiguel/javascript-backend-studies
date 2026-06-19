@@ -2,9 +2,9 @@ const express = require('express')
 const router = express.Router()
 
 const users = require('../data/users')
-const userController = require('../controllers/userController')
+const usersController = require('../controllers/userController')
 
-router.get('/', userController.getUsers)
+router.get('/', usersController.getUsers)
 
 router.get('/count', (req, res) => {
   const count = users.length
@@ -29,21 +29,7 @@ router.get('/search', (req, res) => {
   res.json(queryUsers)
 })
 
-router.get('/:id', (req, res) => {
-  const reqId = Number(req.params.id)
-
-  if (Number.isNaN(reqId)) {
-    return res.status(400).json({ message: 'Invalid id format' })
-  }
-
-  const user = users.find((user) => user.id === reqId)
-
-  if (!user) {
-    return res.status(404).json({ message: 'User not found' })
-  }
-
-  res.json(user)
-})
+router.get('/:id', usersController.getUserById)
 
 router.post('/', (req, res) => {
   const { name } = req.body
