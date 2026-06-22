@@ -20,7 +20,22 @@ function getUserById(req, res) {
   res.json(user)
 }
 
+function getUsersByName(req, res) {
+  const name = req.query.name
+  if (!name || name.trim() === '') {
+    return res.status(400).json({ message: 'Name query parameter is required' })
+  }
+
+  const searchName = name.toLowerCase()
+  const queryUsers = users.filter((user) =>
+    user.name.toLowerCase().includes(searchName),
+  )
+
+  res.json(queryUsers)
+}
+
 module.exports = {
   getUsers,
   getUserById,
+  getUsersByName,
 }

@@ -16,18 +16,7 @@ router.get('/names', (req, res) => {
   res.json(names)
 })
 
-router.get('/search', (req, res) => {
-  const name = req.query.name
-  if (!name || name.trim() === '') {
-    return res.status(400).json({ message: 'Name query paramter is required' })
-  }
-  const reqName = name.toLowerCase()
-  const queryUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(reqName),
-  )
-
-  res.json(queryUsers)
-})
+router.get('/search', usersController.getUsersByName)
 
 router.get('/:id', usersController.getUserById)
 
