@@ -13,26 +13,7 @@ router.get('/search', usersController.getUsersByName)
 
 router.get('/:id', usersController.getUserById)
 
-router.post('/', (req, res) => {
-  const { name } = req.body
-
-  if (typeof name !== 'string' || name.trim() === '') {
-    return res
-      .status(400)
-      .json({ message: 'Name field is required and cannot be empty' })
-  }
-
-  const lastUser = users[users.length - 1]
-
-  const newUser = {
-    id: lastUser.id + 1,
-    name,
-  }
-
-  users.push(newUser)
-
-  res.json(newUser)
-})
+router.post('/', usersController.postNewUser)
 
 router.put('/:id', (req, res) => {
   const reqId = Number(req.params.id)

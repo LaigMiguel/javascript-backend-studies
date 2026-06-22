@@ -44,10 +44,30 @@ function getUsersByName(req, res) {
   res.json(queryUsers)
 }
 
+function postNewUser(req, res) {
+  const { name } = req.body
+
+  if (typeof name !== 'string' || name.trim() === '') {
+    return res
+      .status(400)
+      .json({ message: 'Name field is required and cannot be empty' })
+  }
+
+  const lastUser = users[users.length - 1]
+  const newUser = {
+    id: lastUser.id + 1,
+    name,
+  }
+
+  users.push(newUser)
+  return res.status(201).json(newUser)
+}
+
 module.exports = {
   getUsers,
   getUserById,
   getUsersByName,
   getUsersCount,
   getUsersNames,
+  postNewUser,
 }
