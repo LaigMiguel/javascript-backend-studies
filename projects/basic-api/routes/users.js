@@ -17,22 +17,6 @@ router.post('/', usersController.postNewUser)
 
 router.put('/:id', usersController.putUser)
 
-router.delete('/:id', (req, res) => {
-  const reqId = Number(req.params.id)
-
-  if (Number.isNaN(reqId)) {
-    return res.status(400).json({ message: 'Invalid id format' })
-  }
-
-  const user = users.find((user) => user.id === reqId)
-
-  if (!user) {
-    return res.status(404).json({ message: 'User not found' })
-  }
-
-  users = users.filter((user) => user.id !== reqId)
-
-  return res.status(204).send()
-})
+router.delete('/:id', usersController.deleteUser)
 
 module.exports = router

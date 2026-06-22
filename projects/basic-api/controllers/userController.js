@@ -85,6 +85,22 @@ function putUser(req, res) {
   return res.json(user)
 }
 
+function deleteUser(req, res) {
+  const userId = Number(req.params.id)
+  if (Number.isNaN(userId)) {
+    return res.status(400).json({ message: 'Invalid ID format' })
+  }
+
+  const userIndex = users.findIndex((user) => user.id === userId)
+  if (userIndex === -1) {
+    return res.status(404).json({ message: 'User not found' })
+  }
+
+  users.splice(userIndex, 1)
+
+  return res.status(204).send()
+}
+
 module.exports = {
   getUsers,
   getUserById,
@@ -93,4 +109,5 @@ module.exports = {
   getUsersNames,
   postNewUser,
   putUser,
+  deleteUser,
 }
