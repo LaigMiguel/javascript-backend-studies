@@ -7,11 +7,7 @@ const usersController = require('../controllers/userController')
 router.get('/', usersController.getUsers)
 
 router.get('/count', usersController.getUsersCount)
-router.get('/names', (req, res) => {
-  const names = users.map((user) => user.name)
-
-  res.json(names)
-})
+router.get('/names', usersController.getUsersNames)
 
 router.get('/search', usersController.getUsersByName)
 

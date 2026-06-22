@@ -9,6 +9,11 @@ function getUsersCount(req, res) {
   res.json(count)
 }
 
+function getUsersNames(req, res) {
+  const names = users.map((user) => user.name)
+  res.json(names)
+}
+
 function getUserById(req, res) {
   const id = Number(req.params.id)
 
@@ -44,4 +49,5 @@ module.exports = {
   getUserById,
   getUsersByName,
   getUsersCount,
+  getUsersNames,
 }
