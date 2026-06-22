@@ -63,6 +63,28 @@ function postNewUser(req, res) {
   return res.status(201).json(newUser)
 }
 
+function putUser(req, res) {
+  const userId = Number(req.params.id)
+  if (Number.isNaN(userId)) {
+    return res.status(400).json({ message: 'Invalid ID format' })
+  }
+
+  const user = users.find((user) => user.id === userId)
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' })
+  }
+
+  const { name } = req.body
+
+  if (typeof name !== 'string' || name.trim() === '') {
+    return res
+      .status(400)
+      .json({ message: 'Name field is required and cannot be empty' })
+  }
+  user.name = name
+  return res.json(user)
+}
+
 module.exports = {
   getUsers,
   getUserById,
@@ -70,4 +92,5 @@ module.exports = {
   getUsersCount,
   getUsersNames,
   postNewUser,
+  putUser,
 }
