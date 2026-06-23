@@ -1,4 +1,5 @@
 const users = require('../data/users')
+const userService = require('../service/usersService')
 
 function getUsers(req, res) {
   res.json(users)
@@ -47,20 +48,12 @@ function getUsersByName(req, res) {
 function postNewUser(req, res) {
   const { name } = req.body
 
-  if (typeof name !== 'string' || name.trim() === '') {
-    return res
-      .status(400)
-      .json({ message: 'Name field is required and cannot be empty' })
+  try {
+    const user = userService.createUser(name)
+    return res.status(201).json(user)
+  } catch (error) {
+    return res.status(400).json({ message: error.message })
   }
-
-  const lastUser = users[users.length - 1]
-  const newUser = {
-    id: lastUser.id + 1,
-    name,
-  }
-
-  users.push(newUser)
-  return res.status(201).json(newUser)
 }
 
 function putUser(req, res) {
