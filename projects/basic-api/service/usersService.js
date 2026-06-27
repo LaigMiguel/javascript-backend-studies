@@ -60,9 +60,23 @@ function updateUserById(id, name) {
   return user
 }
 
+function deleteUserById(id) {
+  if (Number.isNaN(id)) {
+    throw new Error('Id needs to be in a valid format')
+  }
+
+  const userIndex = users.findIndex((user) => user.id === id)
+  if (userIndex === -1) {
+    throw new Error('User not found')
+  }
+
+  users.splice(userIndex, 1)
+}
+
 module.exports = {
   createUser,
   searchUserById,
   searchUserByName,
   updateUserById,
+  deleteUserById,
 }
