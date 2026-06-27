@@ -43,8 +43,26 @@ function searchUserByName(name) {
   return queryUsers
 }
 
+function updateUserById(id, name) {
+  if (Number.isNaN(id)) {
+    throw new Error('Id needs to be in a valid format')
+  }
+  const user = users.find((user) => user.id === id)
+  if (!user) {
+    throw new Error('User not found')
+  }
+
+  if (typeof name !== 'string' || name.trim() === '') {
+    throw new Error('Name is required')
+  }
+
+  user.name = name
+  return user
+}
+
 module.exports = {
   createUser,
   searchUserById,
   searchUserByName,
+  updateUserById,
 }
