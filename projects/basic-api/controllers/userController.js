@@ -28,16 +28,12 @@ function getUserById(req, res) {
 
 function getUsersByName(req, res) {
   const name = req.query.name
-  if (!name || name.trim() === '') {
-    return res.status(400).json({ message: 'Name query parameter is required' })
+  try {
+    const queryUsers = userService.searchUserByName(name)
+    return res.json(queryUsers)
+  } catch (error) {
+    return res.status(400).json({ message: error.message })
   }
-
-  const searchName = name.toLowerCase()
-  const queryUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(searchName),
-  )
-
-  res.json(queryUsers)
 }
 
 function postNewUser(req, res) {

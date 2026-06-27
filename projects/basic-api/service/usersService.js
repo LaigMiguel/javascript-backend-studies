@@ -30,7 +30,21 @@ function searchUserById(id) {
   return user
 }
 
+function searchUserByName(name) {
+  if (!name || name.trim() === '') {
+    throw new Error('Name is required')
+  }
+
+  const searchName = name.toLowerCase()
+  const queryUsers = users.filter((user) =>
+    user.name.toLowerCase().includes(searchName),
+  )
+
+  return queryUsers
+}
+
 module.exports = {
   createUser,
   searchUserById,
+  searchUserByName,
 }
