@@ -1,4 +1,5 @@
 const users = require('../data/users')
+const AppError = require('../errors/appError')
 
 function createUser(name) {
   if (typeof name !== 'string' || name.trim() === '') {
@@ -18,13 +19,13 @@ function createUser(name) {
 
 function searchUserById(id) {
   if (Number.isNaN(id)) {
-    throw new Error('Id needs to be in a valid format')
+    throw new AppError('Id needs to be in a valid format', 400)
   }
 
   const user = users.find((user) => user.id === id)
 
   if (!user) {
-    throw new Error('User not found')
+    throw new AppError('User not found', 404)
   }
 
   return user
