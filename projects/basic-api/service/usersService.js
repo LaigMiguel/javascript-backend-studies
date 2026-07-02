@@ -3,7 +3,7 @@ const AppError = require('../errors/appError')
 
 function createUser(name) {
   if (typeof name !== 'string' || name.trim() === '') {
-    throw new Error('Invalid name')
+    throw new AppError('Invalid name', 400)
   }
 
   const lastUser = users[users.length - 1]
@@ -33,7 +33,7 @@ function searchUserById(id) {
 
 function searchUserByName(name) {
   if (!name || name.trim() === '') {
-    throw new Error('Name is required')
+    throw new AppError('Name is required', 400)
   }
 
   const searchName = name.toLowerCase()
@@ -46,15 +46,15 @@ function searchUserByName(name) {
 
 function updateUserById(id, name) {
   if (Number.isNaN(id)) {
-    throw new Error('Id needs to be in a valid format')
+    throw new AppError('Id needs to be in a valid format', 400)
   }
   const user = users.find((user) => user.id === id)
   if (!user) {
-    throw new Error('User not found')
+    throw new AppError('User not found', 404)
   }
 
   if (typeof name !== 'string' || name.trim() === '') {
-    throw new Error('Name is required')
+    throw new AppError('Name is required', 400)
   }
 
   user.name = name
@@ -63,12 +63,12 @@ function updateUserById(id, name) {
 
 function deleteUserById(id) {
   if (Number.isNaN(id)) {
-    throw new Error('Id needs to be in a valid format')
+    throw new AppError('Id needs to be in a valid format', 400)
   }
 
   const userIndex = users.findIndex((user) => user.id === id)
   if (userIndex === -1) {
-    throw new Error('User not found')
+    throw new AppError('User not found', 404)
   }
 
   users.splice(userIndex, 1)

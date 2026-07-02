@@ -22,7 +22,7 @@ function getUserById(req, res) {
     const user = userService.searchUserById(id)
     return res.json(user)
   } catch (error) {
-    return res.status(400).json({ message: error.message })
+    return res.status(error.statusCode).json({ message: error.message })
   }
 }
 
@@ -32,7 +32,7 @@ function getUsersByName(req, res) {
     const queryUsers = userService.searchUserByName(name)
     return res.json(queryUsers)
   } catch (error) {
-    return res.status(400).json({ message: error.message })
+    return res.status(error.statusCode).json({ message: error.message })
   }
 }
 
@@ -41,9 +41,9 @@ function postNewUser(req, res) {
 
   try {
     const user = userService.createUser(name)
-    return res.status(201).json(user)
+    return res.status(error.statusCode).json(user)
   } catch (error) {
-    return res.status(400).json({ message: error.message })
+    return res.status(error.statusCode).json({ message: error.message })
   }
 }
 
@@ -55,7 +55,7 @@ function putUser(req, res) {
     const updatedUser = userService.updateUserById(userId, name)
     return res.json(updatedUser)
   } catch (error) {
-    return res.status(400).json({ message: error.message })
+    return res.status(error.statusCode).json({ message: error.message })
   }
 }
 
@@ -65,7 +65,7 @@ function deleteUser(req, res) {
     const deletedUser = userService.deleteUserById(userId)
     return res.status(204).send()
   } catch (error) {
-    return res.status(400).json({ message: error.message })
+    return res.status(error.statusCode).json({ message: error.message })
   }
 }
 
