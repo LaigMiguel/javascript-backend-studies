@@ -18,55 +18,37 @@ function getUsersNames(req, res) {
 function getUserById(req, res) {
   const id = Number(req.params.id)
 
-  try {
-    const user = userService.searchUserById(id)
-    return res.json(user)
-  } catch (error) {
-    return res.status(error.statusCode).json({ message: error.message })
-  }
+  const user = userService.searchUserById(id)
+  return res.json(user)
 }
 
 function getUsersByName(req, res) {
   const name = req.query.name
-  try {
-    const queryUsers = userService.searchUserByName(name)
-    return res.json(queryUsers)
-  } catch (error) {
-    return res.status(error.statusCode).json({ message: error.message })
-  }
+
+  const queryUsers = userService.searchUserByName(name)
+  return res.json(queryUsers)
 }
 
 function postNewUser(req, res) {
   const { name } = req.body
 
-  try {
-    const user = userService.createUser(name)
-    return res.status(error.statusCode).json(user)
-  } catch (error) {
-    return res.status(error.statusCode).json({ message: error.message })
-  }
+  const user = userService.createUser(name)
+  return res.status(error.statusCode).json(user)
 }
 
 function putUser(req, res) {
   const userId = Number(req.params.id)
   const { name } = req.body
 
-  try {
-    const updatedUser = userService.updateUserById(userId, name)
-    return res.json(updatedUser)
-  } catch (error) {
-    return res.status(error.statusCode).json({ message: error.message })
-  }
+  const updatedUser = userService.updateUserById(userId, name)
+  return res.json(updatedUser)
 }
 
 function deleteUser(req, res) {
   const userId = Number(req.params.id)
-  try {
-    const deletedUser = userService.deleteUserById(userId)
-    return res.status(204).send()
-  } catch (error) {
-    return res.status(error.statusCode).json({ message: error.message })
-  }
+
+  const deletedUser = userService.deleteUserById(userId)
+  return res.status(204).send()
 }
 
 module.exports = {

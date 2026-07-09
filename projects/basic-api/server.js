@@ -1,12 +1,13 @@
 const express = require('express')
+const usersRouter = require('./routes/users')
+const errorMiddleware = require('./middlewares/errorMiddleware')
 
 const app = express()
 
 app.use(express.json())
 
-const usersRouter = require('./routes/users')
-
 app.use('/users', usersRouter)
+app.use(errorMiddleware)
 
 app.get('/health', (req, res) => {
   res.json({
