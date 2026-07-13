@@ -33,7 +33,7 @@ function postNewUser(req, res) {
   const { name } = req.body
 
   const user = userService.createUser(name)
-  return res.status(error.statusCode).json(user)
+  return res.status(201).json(user)
 }
 
 function putUser(req, res) {
