@@ -1,6 +1,11 @@
+const AppError = require('../errors/appError')
+
 function errorMiddleware(error, req, res, next) {
-  const statusCode = error.statusCode || 500
-  return res.status(statusCode).json({ message: error.message })
+  if (error instanceof AppError) {
+    return res.status(error.statusCode).json({ message: error.message })
+  } else {
+    return res.status(500).json({ message: 'Internal Server Error' })
+  }
 }
 
 module.exports = errorMiddleware
