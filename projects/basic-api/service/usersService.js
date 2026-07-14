@@ -1,6 +1,17 @@
 const users = require('../data/users')
 const AppError = require('../errors/appError')
 
+function getAllUsers() {
+  return users
+}
+function getUsersCount() {
+  return users.length
+}
+function getUsersNames() {
+  const names = users.map((user) => user.name)
+  return names
+}
+
 function createUser(name) {
   if (typeof name !== 'string' || name.trim() === '') {
     throw new AppError('Invalid name', 400)
@@ -75,6 +86,9 @@ function deleteUserById(id) {
 }
 
 module.exports = {
+  getAllUsers,
+  getUsersCount,
+  getUsersNames,
   createUser,
   searchUserById,
   searchUserByName,

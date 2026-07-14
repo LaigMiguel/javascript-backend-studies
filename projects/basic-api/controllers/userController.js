@@ -1,17 +1,17 @@
-const users = require('../data/users')
 const userService = require('../service/usersService')
 
 function getUsers(req, res) {
-  res.json(users)
+  const allUsers = userService.getAllUsers()
+  res.json(allUsers)
 }
 
 function getUsersCount(req, res) {
-  const count = users.length
+  const count = userService.getUsersCount()
   res.json(count)
 }
 
 function getUsersNames(req, res) {
-  const names = users.map((user) => user.name)
+  const names = userService.getUsersNames()
   res.json(names)
 }
 
