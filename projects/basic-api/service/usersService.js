@@ -1,15 +1,14 @@
-const users = require('../data/users')
 const AppError = require('../errors/appError')
+const userRepository = require('../repository/userRepository')
 
 function getAllUsers() {
-  return users
+  return userRepository.getUsers()
 }
 function getUsersCount() {
-  return users.length
+  return userRepository.getUsersCount()
 }
 function getUsersNames() {
-  const names = users.map((user) => user.name)
-  return names
+  return userRepository.getUsersNames()
 }
 
 function createUser(name) {
@@ -17,13 +16,7 @@ function createUser(name) {
     throw new AppError('Invalid name', 400)
   }
 
-  const lastUser = users[users.length - 1]
-
-  const newUser = {
-    id: lastUser.id + 1,
-    name,
-  }
-  users.push(newUser)
+  const newUser = userRepository.createUser(name)
 
   return newUser
 }
@@ -33,7 +26,7 @@ function searchUserById(id) {
     throw new AppError('Id needs to be in a valid format', 400)
   }
 
-  const user = users.find((user) => user.id === id)
+  const user = userRepository.getUserById(id)
 
   if (!user) {
     throw new AppError('User not found', 404)
@@ -47,28 +40,19 @@ function searchUserByName(name) {
     throw new AppError('Name is required', 400)
   }
 
-  const searchName = name.toLowerCase()
-  const queryUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(searchName),
-  )
+  const queryUsers = userRepository.getUserByName(name)
 
   return queryUsers
 }
 
 function updateUserById(id, name) {
-  if (Number.isNaN(id)) {
-    throw new AppError('Id needs to be in a valid format', 400)
-  }
-  const user = users.find((user) => user.id === id)
-  if (!user) {
-    throw new AppError('User not found', 404)
-  }
+  const user = searchUserById(id)
 
   if (typeof name !== 'string' || name.trim() === '') {
     throw new AppError('Name is required', 400)
   }
 
-  user.name = name
+  userRepository.updateUser(id, name)
   return user
 }
 
@@ -77,12 +61,9 @@ function deleteUserById(id) {
     throw new AppError('Id needs to be in a valid format', 400)
   }
 
-  const userIndex = users.findIndex((user) => user.id === id)
-  if (userIndex === -1) {
-    throw new AppError('User not found', 404)
-  }
+  searchUserById(id)
 
-  users.splice(userIndex, 1)
+  userRepository.deleteUserById(id)
 }
 
 module.exports = {
