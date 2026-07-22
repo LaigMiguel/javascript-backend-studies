@@ -1,7 +1,16 @@
 const users = require('../data/users')
+const db = require('../database/database')
 
 function getUsers() {
-  return users
+  return new Promise((resolve, reject) => {
+    db.all('SELECT * FROM users', (error, rows) => {
+      if (error) {
+        reject(error)
+        return
+      }
+      resolve(rows)
+    })
+  })
 }
 function getUsersCount() {
   return users.length
