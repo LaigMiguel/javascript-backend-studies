@@ -11,22 +11,22 @@ function getUsersNames() {
   return userRepository.getUsersNames()
 }
 
-function createUser(name) {
+async function createUser(name) {
   if (typeof name !== 'string' || name.trim() === '') {
     throw new AppError('Invalid name', 400)
   }
 
-  const newUser = userRepository.createUser(name)
+  const newUser = await userRepository.createUser(name)
 
   return newUser
 }
 
-function searchUserById(id) {
+async function searchUserById(id) {
   if (Number.isNaN(id)) {
     throw new AppError('Id needs to be in a valid format', 400)
   }
 
-  const user = userRepository.getUserById(id)
+  const user = await userRepository.getUserById(id)
 
   if (!user) {
     throw new AppError('User not found', 404)
@@ -35,25 +35,27 @@ function searchUserById(id) {
   return user
 }
 
-function searchUserByName(name) {
+async function searchUserByName(name) {
   if (!name || name.trim() === '') {
     throw new AppError('Name is required', 400)
   }
 
-  const queryUsers = userRepository.getUserByName(name)
+  const queryUsers = await userRepository.getUserByName(name)
 
   return queryUsers
 }
 
-function updateUserById(id, name) {
+async function updateUserById(id, name) {
   const user = searchUserById(id)
 
   if (typeof name !== 'string' || name.trim() === '') {
     throw new AppError('Name is required', 400)
   }
 
-  userRepository.updateUser(id, name)
-  return user
+  await userRepository.updateUser(id, name)
+
+  const updatedUser = await userRepository.getUserById(id)
+  return updatedUser
 }
 
 function deleteUserById(id) {

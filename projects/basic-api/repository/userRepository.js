@@ -1,4 +1,3 @@
-const users = require('../data/users')
 const db = require('../database/database')
 
 function getUsers() {
@@ -13,49 +12,94 @@ function getUsers() {
   })
 }
 function getUsersCount() {
-  return users.length
+  return new Promise((resolve, reject) => {
+    db.get('SELECT COUNT(*) AS count FROM users', (error, row) => {
+      if (error) {
+        reject(error)
+        return
+      }
+      resolve(row.count)
+    })
+  })
 }
 function getUsersNames() {
-  return users.map((user) => user.name)
+  return new Promise((resolve, reject) => {
+    db.all('SELECT name FROM users', (error, rows) => {
+      if (error) {
+        reject(error)
+        return
+      }
+      resolve(rows)
+    })
+  })
 }
 
 function getUserById(id) {
-  const user = users.find((user) => user.id === id)
-  return user
+  return new Promise((resolve, reject) => {
+    db.get('SELECT * FROM users WHERE id = ?', [id], (error, row) => {
+      if (error) {
+        reject(error)
+        return
+      }
+      resolve(row)
+    })
+  })
 }
 
 function createUser(name) {
-  const lastUser = users[users.length - 1]
-
-  const newUser = {
-    id: lastUser.id + 1,
-    name,
-  }
-  users.push(newUser)
-  return newUser
+  return new Promise((resolve, reject) => {
+    db.run('INSERT INTO users (name) VALUES(?)', [name], (error) => {
+      if (error) {
+        reject(error)
+        return
+      }
+      resolve()
+    })
+  })
 }
+
 function getUserByName(name) {
-  const searchName = name.toLowerCase()
-  const queryUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(searchName),
-  )
-  return queryUsers
+  return new Promise((resolve, reject) => {
+    db.all(
+      'SELECT * FROM users WHERE LOWER(name) LIKE LOWER(?)',
+      [`%${name}%`],
+      (error, rows) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(rows)
+      },
+    )
+  })
 }
 
 function updateUser(id, name) {
-  const user = getUserById(id)
-  user.name = name
-  return user
-}
-
-function getUserIndexById(id) {
-  const userIndex = users.findIndex((user) => user.id === id)
-  return userIndex
+  return new Promise((resolve, reject) => {
+    db.run(
+      'UPDATE users SET name = ? WHERE id = ?',
+      [name, id],
+      function (error) {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(this.changes)
+      },
+    )
+  })
 }
 
 function deleteUserById(id) {
-  const userIndex = getUserIndexById(id)
-  users.splice(userIndex, 1)
+  return new Promise((resolve, reject) => {
+    db.run('DELETE FROM users WHERE id = ?', [id], (error) => {
+      if (error) {
+        reject(error)
+        return
+      }
+      resolve()
+    })
+  })
 }
 
 module.exports = {

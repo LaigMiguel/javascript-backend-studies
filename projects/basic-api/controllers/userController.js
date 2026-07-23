@@ -1,53 +1,53 @@
 const userService = require('../service/usersService')
 
-function getUsers(req, res) {
-  const allUsers = userService.getAllUsers()
+async function getUsers(req, res) {
+  const allUsers = await userService.getAllUsers()
   res.json(allUsers)
 }
 
-function getUsersCount(req, res) {
-  const count = userService.getUsersCount()
+async function getUsersCount(req, res) {
+  const count = await userService.getUsersCount()
   res.json(count)
 }
 
-function getUsersNames(req, res) {
-  const names = userService.getUsersNames()
+async function getUsersNames(req, res) {
+  const names = await userService.getUsersNames()
   res.json(names)
 }
 
-function getUserById(req, res) {
+async function getUserById(req, res) {
   const id = Number(req.params.id)
 
-  const user = userService.searchUserById(id)
+  const user = await userService.searchUserById(id)
   return res.json(user)
 }
 
-function getUsersByName(req, res) {
+async function getUsersByName(req, res) {
   const name = req.query.name
 
-  const queryUsers = userService.searchUserByName(name)
+  const queryUsers = await userService.searchUserByName(name)
   return res.json(queryUsers)
 }
 
-function postNewUser(req, res) {
+async function postNewUser(req, res) {
   const { name } = req.body
 
-  const user = userService.createUser(name)
+  const user = await userService.createUser(name)
   return res.status(201).json(user)
 }
 
-function putUser(req, res) {
+async function putUser(req, res) {
   const userId = Number(req.params.id)
   const { name } = req.body
 
-  const updatedUser = userService.updateUserById(userId, name)
+  const updatedUser = await userService.updateUserById(userId, name)
   return res.json(updatedUser)
 }
 
-function deleteUser(req, res) {
+async function deleteUser(req, res) {
   const userId = Number(req.params.id)
 
-  const deletedUser = userService.deleteUserById(userId)
+  const deletedUser = await userService.deleteUserById(userId)
   return res.status(204).send()
 }
 

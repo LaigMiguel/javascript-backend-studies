@@ -1,4 +1,4 @@
-const db = require('./database/database.sqlite')
+const db = require('./database.js')
 
 db.run(
   `
