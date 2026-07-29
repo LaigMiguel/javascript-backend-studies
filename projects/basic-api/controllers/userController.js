@@ -15,6 +15,11 @@ async function getUsersNames(req, res) {
   res.json(names)
 }
 
+async function getUsersBySortedName(req, res) {
+  const queryUsers = await userService.searchUsersBySortedNames()
+  return res.json(queryUsers)
+}
+
 async function getUserById(req, res) {
   const id = Number(req.params.id)
 
@@ -57,6 +62,7 @@ module.exports = {
   getUsersByName,
   getUsersCount,
   getUsersNames,
+  getUsersBySortedName,
   postNewUser,
   putUser,
   deleteUser,

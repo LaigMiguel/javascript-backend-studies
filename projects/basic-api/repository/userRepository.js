@@ -74,6 +74,18 @@ function getUserByName(name) {
   })
 }
 
+function getUsersSortedByName() {
+  return new Promise((resolve, reject) => {
+    db.all('SELECT * FROM users ORDER BY name', (error, rows) => {
+      if (error) {
+        reject(error)
+        return
+      }
+      resolve(rows)
+    })
+  })
+}
+
 function updateUser(id, name) {
   return new Promise((resolve, reject) => {
     db.run(
@@ -109,6 +121,7 @@ module.exports = {
   getUserById,
   createUser,
   getUserByName,
+  getUsersSortedByName,
   updateUser,
   deleteUserById,
 }

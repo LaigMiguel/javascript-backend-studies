@@ -9,6 +9,7 @@ router.get('/count', usersController.getUsersCount)
 router.get('/names', usersController.getUsersNames)
 
 router.get('/search', usersController.getUsersByName)
+router.get('/sorted', usersController.getUsersBySortedName)
 
 router.get('/:id', usersController.getUserById)
 

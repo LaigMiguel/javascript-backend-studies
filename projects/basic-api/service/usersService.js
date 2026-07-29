@@ -21,6 +21,11 @@ async function createUser(name) {
   return newUser
 }
 
+async function searchUsersBySortedNames() {
+  const queryUsers = await userRepository.getUsersSortedByName()
+  return queryUsers
+}
+
 async function searchUserById(id) {
   if (Number.isNaN(id)) {
     throw new AppError('Id needs to be in a valid format', 400)
@@ -44,7 +49,6 @@ async function searchUserByName(name) {
 
   return queryUsers
 }
-
 async function updateUserById(id, name) {
   const user = searchUserById(id)
 
@@ -75,6 +79,7 @@ module.exports = {
   createUser,
   searchUserById,
   searchUserByName,
+  searchUsersBySortedNames,
   updateUserById,
   deleteUserById,
 }
