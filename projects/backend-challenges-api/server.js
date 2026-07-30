@@ -1,10 +1,12 @@
 const express = require('express')
-const usersRouter = require('./routes/users')
+const customersRouter = require('./routes/customers')
 const errorMiddleware = require('./middlewares/errorMiddleware')
 
 const app = express()
+app.use(express.json())
 
-app.use('/users', usersRouter)
+app.use('/customers', customersRouter)
+
 app.use(errorMiddleware)
 
 app.listen(3000, () => {
