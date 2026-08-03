@@ -5,6 +5,13 @@ async function getCustomers(req, res) {
   return res.json(customers)
 }
 
+async function getCustomersById(req, res) {
+  const id = Number(req.params.id)
+
+  const customer = await customerService.getCustomersById(id)
+  return res.json(customer)
+}
+
 async function postNewCustomer(req, res) {
   const { name } = req.body
 
@@ -15,4 +22,5 @@ async function postNewCustomer(req, res) {
 module.exports = {
   postNewCustomer,
   getCustomers,
+  getCustomersById,
 }

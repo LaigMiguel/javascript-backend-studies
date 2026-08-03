@@ -12,6 +12,18 @@ function getCustomers() {
   })
 }
 
+function getCustomersById(id) {
+  return new Promise((resolve, reject) => {
+    db.get('SELECT * FROM users WHERE id = ?', [id], (error, row) => {
+      if (error) {
+        reject(error)
+        return
+      }
+      resolve(row)
+    })
+  })
+}
+
 function postNewCustomer(name) {
   return new Promise((resolve, reject) => {
     db.run('INSERT INTO users (name) VALUES(?)', [name], (error) => {
@@ -27,4 +39,5 @@ function postNewCustomer(name) {
 module.exports = {
   postNewCustomer,
   getCustomers,
+  getCustomersById,
 }
