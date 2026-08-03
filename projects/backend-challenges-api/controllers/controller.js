@@ -1,5 +1,10 @@
 const customerService = require('../service/service')
 
+async function getCustomers(req, res) {
+  const customers = await customerService.getCustomers()
+  return res.json(customers)
+}
+
 async function postNewCustomer(req, res) {
   const { name } = req.body
 
@@ -9,4 +14,5 @@ async function postNewCustomer(req, res) {
 
 module.exports = {
   postNewCustomer,
+  getCustomers,
 }
