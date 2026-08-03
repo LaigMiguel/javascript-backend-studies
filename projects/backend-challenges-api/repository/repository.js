@@ -12,6 +12,22 @@ function getCustomers() {
   })
 }
 
+function getCustomersByQueryParam(name) {
+  return new Promise((resolve, reject) => {
+    db.all(
+      'SELECT * FROM users WHERE LOWER(name) LIKE LOWER(?)',
+      [`%${name}%`],
+      (error, rows) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(rows)
+      },
+    )
+  })
+}
+
 function getCustomersById(id) {
   return new Promise((resolve, reject) => {
     db.get('SELECT * FROM users WHERE id = ?', [id], (error, row) => {
@@ -40,4 +56,5 @@ module.exports = {
   postNewCustomer,
   getCustomers,
   getCustomersById,
+  getCustomersByQueryParam,
 }

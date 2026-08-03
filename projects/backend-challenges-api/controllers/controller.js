@@ -5,6 +5,13 @@ async function getCustomers(req, res) {
   return res.json(customers)
 }
 
+async function getCustomersByQueryParam(req, res) {
+  const name = req.query.name
+
+  const querySearch = await customerService.getCustomersByQueryParam(name)
+  return res.json(querySearch)
+}
+
 async function getCustomersById(req, res) {
   const id = Number(req.params.id)
 
@@ -23,4 +30,5 @@ module.exports = {
   postNewCustomer,
   getCustomers,
   getCustomersById,
+  getCustomersByQueryParam,
 }
