@@ -7,5 +7,6 @@ router.get('/search', customerController.getCustomersByQueryParam)
 router.get('/:id', customerController.getCustomersById)
 router.post('/', customerController.postNewCustomer)
 router.put('/:id', customerController.updateCustomer)
+router.delete('/:id', customerController.deleteCustomer)
 
 module.exports = router

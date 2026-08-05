@@ -34,10 +34,19 @@ async function updateCustomer(req, res) {
   return res.status(200).json(updatedCustomer)
 }
 
+async function deleteCustomer(req, res) {
+  const id = Number(req.params.id)
+
+  await customerService.deleteCustomer(id)
+
+  return res.status(204).send()
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
   getCustomersById,
   getCustomersByQueryParam,
   updateCustomer,
+  deleteCustomer,
 }

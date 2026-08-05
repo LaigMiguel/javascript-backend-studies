@@ -64,10 +64,22 @@ function updateCustomer(name, id) {
   })
 }
 
+async function deleteCustomer(id) {
+  return new Promise((resolve, reject) => {
+    db.run('DELETE FROM users WHERE id = ?', [id], (error) => {
+      if (error) {
+        reject(error)
+        return
+      }
+      resolve()
+    })
+  })
+}
 module.exports = {
   postNewCustomer,
   getCustomers,
   getCustomersById,
   getCustomersByQueryParam,
   updateCustomer,
+  deleteCustomer,
 }

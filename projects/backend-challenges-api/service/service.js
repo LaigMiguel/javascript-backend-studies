@@ -44,11 +44,15 @@ async function updateCustomer(name, id) {
   const updatedCustomer = await customerRepository.getCustomersById(id)
   return updatedCustomer
 }
-
+async function deleteCustomer(id) {
+  await getCustomersById(id)
+  await customerRepository.deleteCustomer(id)
+}
 module.exports = {
   postNewCustomer,
   getCustomers,
   getCustomersById,
   getCustomersByQueryParam,
   updateCustomer,
+  deleteCustomer,
 }
