@@ -38,9 +38,17 @@ async function postNewCustomer(name) {
   return newUser
 }
 
+async function updateCustomer(name, id) {
+  await customerRepository.getCustomersById(id)
+  await customerRepository.updateCustomer(name, id)
+  const updatedCustomer = await customerRepository.getCustomersById(id)
+  return updatedCustomer
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
   getCustomersById,
   getCustomersByQueryParam,
+  updateCustomer,
 }

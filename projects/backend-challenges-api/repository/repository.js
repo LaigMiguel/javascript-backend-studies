@@ -52,9 +52,22 @@ function postNewCustomer(name) {
   })
 }
 
+function updateCustomer(name, id) {
+  return new Promise((resolve, reject) => {
+    db.run('UPDATE users SET name = ? WHERE id = ?', [name, id], (error) => {
+      if (error) {
+        reject(error)
+        return
+      }
+      resolve()
+    })
+  })
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
   getCustomersById,
   getCustomersByQueryParam,
+  updateCustomer,
 }
