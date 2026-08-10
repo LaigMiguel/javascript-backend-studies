@@ -20,7 +20,7 @@ async function getCustomersById(req, res) {
 }
 
 async function postNewCustomer(req, res) {
-  const { name } = req.body
+  const { name } = req.body || {}
 
   const user = await customerService.postNewCustomer(name)
   return res.status(201).json(user)
@@ -28,7 +28,7 @@ async function postNewCustomer(req, res) {
 
 async function updateCustomer(req, res) {
   const id = Number(req.params.id)
-  const { name } = req.body
+  const { name } = req.body || {}
   const updatedCustomer = await customerService.updateCustomer(name, id)
 
   return res.status(200).json(updatedCustomer)
