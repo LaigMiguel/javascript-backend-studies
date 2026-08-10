@@ -15,7 +15,7 @@ async function getCustomersByQueryParam(name) {
   return querySearch
 }
 
-async function getCustomersById(id) {
+async function getCustomersByIdOrThrow(id) {
   if (Number.isNaN(id) || id < 1) {
     throw new AppError('Invalid id format', 400)
   }
@@ -51,7 +51,7 @@ async function deleteCustomer(id) {
 module.exports = {
   postNewCustomer,
   getCustomers,
-  getCustomersById,
+  getCustomersByIdOrThrow,
   getCustomersByQueryParam,
   updateCustomer,
   deleteCustomer,

@@ -15,7 +15,7 @@ async function getCustomersByQueryParam(req, res) {
 async function getCustomersById(req, res) {
   const id = Number(req.params.id)
 
-  const customer = await customerService.getCustomersById(id)
+  const customer = await customerService.getCustomersByIdOrThrow(id)
   return res.json(customer)
 }
 
