@@ -39,6 +39,9 @@ async function postNewCustomer(name) {
 }
 
 async function updateCustomer(name, id) {
+  if (typeof name !== 'string' || name.trim() === '') {
+    throw new AppError('Invalid name', 400)
+  }
   await getCustomersByIdOrThrow(id)
   await customerRepository.updateCustomer(name, id)
   const updatedCustomer = await customerRepository.getCustomersById(id)
