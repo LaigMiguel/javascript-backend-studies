@@ -39,7 +39,7 @@ async function postNewCustomer(name) {
 }
 
 async function updateCustomer(name, id) {
-  await customerRepository.getCustomersById(id)
+  await getCustomersByIdOrThrow(id)
   await customerRepository.updateCustomer(name, id)
   const updatedCustomer = await customerRepository.getCustomersById(id)
   return updatedCustomer

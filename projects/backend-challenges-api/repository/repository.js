@@ -42,12 +42,17 @@ function getCustomersById(id) {
 
 function postNewCustomer(name) {
   return new Promise((resolve, reject) => {
-    db.run('INSERT INTO users (name) VALUES(?)', [name], (error) => {
+    db.run('INSERT INTO users (name) VALUES(?)', [name], function (error) {
       if (error) {
         reject(error)
         return
       }
-      resolve()
+
+      const newCustomer = {
+        id: this.lastID,
+        name,
+      }
+      resolve(newCustomer)
     })
   })
 }
