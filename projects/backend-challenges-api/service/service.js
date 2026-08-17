@@ -1,4 +1,4 @@
-const AppError = require('../../basic-api/errors/appError')
+const AppError = require('../errors/appError')
 const customerRepository = require('../repository/repository')
 
 async function getCustomers() {

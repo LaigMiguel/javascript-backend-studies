@@ -42,12 +42,16 @@ async function deleteCustomer(req, res) {
   return res.status(204).send()
 }
 
-async function postNewPhone(req, res) {
-  const id = Number(req.params.id)
-  const { phone } = req.body || {}
+async function postNewPhone(req, res, next) {
+  try {
+    const id = Number(req.params.id)
+    const { phone } = req.body || {}
 
-  const newPhone = await customerService.postNewPhone(phone, id)
-  return res.status(201).json(newPhone)
+    const newPhone = await customerService.postNewPhone(phone, id)
+    return res.status(201).json(newPhone)
+  } catch (error) {
+    next(error)
+  }
 }
 
 module.exports = {
