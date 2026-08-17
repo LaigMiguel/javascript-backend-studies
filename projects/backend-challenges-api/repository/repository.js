@@ -102,6 +102,22 @@ function postNewPhone(phone, id) {
   })
 }
 
+function getPhonesByCustomerId(id) {
+  return new Promise((resolve, reject) => {
+    db.all(
+      'SELECT * FROM phones WHERE customer_id = ?',
+      [id],
+      (error, rows) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(rows)
+      },
+    )
+  })
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -110,4 +126,5 @@ module.exports = {
   updateCustomer,
   deleteCustomer,
   postNewPhone,
+  getPhonesByCustomerId,
 }

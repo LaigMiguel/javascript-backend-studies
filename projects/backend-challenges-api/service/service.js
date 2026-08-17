@@ -60,6 +60,12 @@ async function postNewPhone(phone, id) {
   const newPhone = await customerRepository.postNewPhone(phone, id)
   return newPhone
 }
+
+async function getPhonesByCustomerId(id) {
+  await getCustomersByIdOrThrow(id)
+  const phones = await customerRepository.getPhonesByCustomerId(id)
+  return phones
+}
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -68,4 +74,5 @@ module.exports = {
   updateCustomer,
   deleteCustomer,
   postNewPhone,
+  getPhonesByCustomerId,
 }
