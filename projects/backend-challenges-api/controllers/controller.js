@@ -42,6 +42,14 @@ async function deleteCustomer(req, res) {
   return res.status(204).send()
 }
 
+async function postNewPhone(req, res) {
+  const id = Number(req.params.id)
+  const { phone } = req.body || {}
+
+  const newPhone = await customerService.postNewPhone(phone, id)
+  return res.status(201).json(newPhone)
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -49,4 +57,5 @@ module.exports = {
   getCustomersByQueryParam,
   updateCustomer,
   deleteCustomer,
+  postNewPhone,
 }

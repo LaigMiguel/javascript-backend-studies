@@ -8,5 +8,6 @@ router.get('/:id', customerController.getCustomersById)
 router.post('/', customerController.postNewCustomer)
 router.put('/:id', customerController.updateCustomer)
 router.delete('/:id', customerController.deleteCustomer)
+router.post('/:id/phones', customerController.postNewPhone)
 
 module.exports = router

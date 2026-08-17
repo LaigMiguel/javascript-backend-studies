@@ -51,6 +51,15 @@ async function deleteCustomer(id) {
   await getCustomersByIdOrThrow(id)
   await customerRepository.deleteCustomer(id)
 }
+
+async function postNewPhone(phone, id) {
+  await getCustomersByIdOrThrow(id)
+  if (typeof phone !== 'string' || phone.trim() === '') {
+    throw new AppError('Invalid phone', 400)
+  }
+  const newPhone = await customerRepository.postNewPhone(phone, id)
+  return newPhone
+}
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -58,4 +67,5 @@ module.exports = {
   getCustomersByQueryParam,
   updateCustomer,
   deleteCustomer,
+  postNewPhone,
 }

@@ -69,7 +69,7 @@ function updateCustomer(name, id) {
   })
 }
 
-async function deleteCustomer(id) {
+function deleteCustomer(id) {
   return new Promise((resolve, reject) => {
     db.run('DELETE FROM users WHERE id = ?', [id], (error) => {
       if (error) {
@@ -80,6 +80,28 @@ async function deleteCustomer(id) {
     })
   })
 }
+
+function postNewPhone(phone, id) {
+  return new Promise((resolve, reject) => {
+    db.run(
+      'INSERT INTO phones (customer_id, phone) VALUES (?, ?)',
+      [id, phone],
+      function (error) {
+        if (error) {
+          reject(error)
+          return
+        }
+        const newPhone = {
+          customer_id: id,
+          id: this.lastID,
+          phone,
+        }
+        resolve(newPhone)
+      },
+    )
+  })
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -87,4 +109,5 @@ module.exports = {
   getCustomersByQueryParam,
   updateCustomer,
   deleteCustomer,
+  postNewPhone,
 }
