@@ -66,6 +66,25 @@ async function getPhonesByCustomerId(id) {
   const phones = await customerRepository.getPhonesByCustomerId(id)
   return phones
 }
+
+async function deletePhoneFromCustomer(customerId, phoneId) {
+  await getCustomersByIdOrThrow(customerId)
+
+  if (Number.isNaN(phoneId)) {
+    throw new AppError('Invalid phone Id', 400)
+  }
+
+  const changes = await customerRepository.deletePhoneFromCustomer(
+    customerId,
+    phoneId,
+  )
+  if (changes === 0) {
+    throw new AppError('No changes made', 404)
+  }
+
+  return changes
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -75,4 +94,5 @@ module.exports = {
   deleteCustomer,
   postNewPhone,
   getPhonesByCustomerId,
+  deletePhoneFromCustomer,
 }

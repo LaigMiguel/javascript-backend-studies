@@ -64,6 +64,18 @@ async function getPhonesByCustomerId(req, res, next) {
   }
 }
 
+async function deletePhoneFromCustomer(req, res, next) {
+  try {
+    const customerId = Number(req.params.id)
+    const phoneId = Number(req.params.phoneId)
+
+    await customerService.deletePhoneFromCustomer(customerId, phoneId)
+    return res.status(204).send()
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -73,4 +85,5 @@ module.exports = {
   deleteCustomer,
   postNewPhone,
   getPhonesByCustomerId,
+  deletePhoneFromCustomer,
 }

@@ -118,6 +118,22 @@ function getPhonesByCustomerId(id) {
   })
 }
 
+function deletePhoneFromCustomer(customerId, phoneId) {
+  return new Promise((resolve, reject) => {
+    db.run(
+      'DELETE FROM phones WHERE customer_id = ? AND id = ?',
+      [customerId, phoneId],
+      function (error) {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(this.changes)
+      },
+    )
+  })
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -127,4 +143,5 @@ module.exports = {
   deleteCustomer,
   postNewPhone,
   getPhonesByCustomerId,
+  deletePhoneFromCustomer,
 }
