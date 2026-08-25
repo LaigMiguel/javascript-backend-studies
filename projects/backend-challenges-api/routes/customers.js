@@ -4,6 +4,7 @@ const customerController = require('../controllers/controller')
 
 router.get('/', customerController.getCustomers)
 router.get('/search', customerController.getCustomersByQueryParam)
+router.get('/phones', customerController.getPhonesAndCustomerName)
 router.get('/:id', customerController.getCustomersById)
 router.post('/', customerController.postNewCustomer)
 router.put('/:id', customerController.updateCustomer)

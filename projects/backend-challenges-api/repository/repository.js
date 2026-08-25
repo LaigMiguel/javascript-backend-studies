@@ -81,6 +81,21 @@ function deleteCustomer(id) {
   })
 }
 
+function getPhonesAndCustomerName() {
+  return new Promise((resolve, reject) => {
+    db.all(
+      'SELECT phones.id, phones.phone, users.name FROM phones JOIN users ON phones.customer_id = users.id',
+      (error, rows) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(rows)
+      },
+    )
+  })
+}
+
 function postNewPhone(phone, id) {
   return new Promise((resolve, reject) => {
     db.run(
@@ -144,4 +159,5 @@ module.exports = {
   postNewPhone,
   getPhonesByCustomerId,
   deletePhoneFromCustomer,
+  getPhonesAndCustomerName,
 }

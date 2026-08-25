@@ -52,6 +52,11 @@ async function deleteCustomer(id) {
   await customerRepository.deleteCustomer(id)
 }
 
+async function getPhonesAndCustomerName() {
+  const phonesAndCustomers = await customerRepository.getPhonesAndCustomerName()
+  return phonesAndCustomers
+}
+
 async function postNewPhone(phone, id) {
   await getCustomersByIdOrThrow(id)
   if (typeof phone !== 'string' || phone.trim() === '') {
@@ -95,4 +100,5 @@ module.exports = {
   postNewPhone,
   getPhonesByCustomerId,
   deletePhoneFromCustomer,
+  getPhonesAndCustomerName,
 }
