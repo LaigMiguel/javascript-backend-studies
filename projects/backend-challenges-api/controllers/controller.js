@@ -73,6 +73,16 @@ async function getPhonesByCustomerId(req, res, next) {
   }
 }
 
+async function getPhoneByNumber(req, res, next) {
+  try {
+    const phone = req.query.phone
+    const querySearch = await customerService.getPhoneByNumber(phone)
+    return res.status(200).json(querySearch)
+  } catch (error) {
+    next(error)
+  }
+}
+
 async function deletePhoneFromCustomer(req, res, next) {
   try {
     const customerId = Number(req.params.id)
@@ -96,4 +106,5 @@ module.exports = {
   getPhonesByCustomerId,
   deletePhoneFromCustomer,
   getPhonesAndCustomerName,
+  getPhoneByNumber,
 }

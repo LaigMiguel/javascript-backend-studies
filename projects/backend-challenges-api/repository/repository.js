@@ -149,6 +149,22 @@ function deletePhoneFromCustomer(customerId, phoneId) {
   })
 }
 
+function getPhoneByNumber(phoneNumber) {
+  return new Promise((resolve, reject) => {
+    db.all(
+      'SELECT phone FROM phones WHERE phone LIKE(?)',
+      [`%${phoneNumber}%`],
+      (error, rows) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(rows)
+      },
+    )
+  })
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -160,4 +176,5 @@ module.exports = {
   getPhonesByCustomerId,
   deletePhoneFromCustomer,
   getPhonesAndCustomerName,
+  getPhoneByNumber,
 }

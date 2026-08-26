@@ -59,10 +59,15 @@ async function getPhonesAndCustomerName() {
 
 async function postNewPhone(phone, id) {
   await getCustomersByIdOrThrow(id)
+
   if (typeof phone !== 'string' || phone.trim() === '') {
     throw new AppError('Invalid phone', 400)
   }
-  const newPhone = await customerRepository.postNewPhone(phone, id)
+  const normalizedPhone = phone.replace(/\D/g, '')
+  if (normalizedPhone === '') {
+    throw new AppError('Invalid phone', 400)
+  }
+  const newPhone = await customerRepository.postNewPhone(normalizedPhone, id)
   return newPhone
 }
 
@@ -70,6 +75,20 @@ async function getPhonesByCustomerId(id) {
   await getCustomersByIdOrThrow(id)
   const phones = await customerRepository.getPhonesByCustomerId(id)
   return phones
+}
+
+async function getPhoneByNumber(phoneNumber) {
+  if (typeof phoneNumber !== 'string' || phoneNumber.trim() === '') {
+    throw new AppError('Invalid phone', 400)
+  }
+
+  const normalizedPhone = phoneNumber.replace(/\D/g, '')
+  if (normalizedPhone === '') {
+    throw new AppError('Invalid phone', 400)
+  }
+
+  const phoneList = await customerRepository.getPhoneByNumber(normalizedPhone)
+  return phoneList
 }
 
 async function deletePhoneFromCustomer(customerId, phoneId) {
@@ -101,4 +120,5 @@ module.exports = {
   getPhonesByCustomerId,
   deletePhoneFromCustomer,
   getPhonesAndCustomerName,
+  getPhoneByNumber,
 }
