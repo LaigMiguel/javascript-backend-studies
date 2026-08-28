@@ -12,6 +12,7 @@ router.put('/:id', customerController.updateCustomer)
 router.delete('/:id', customerController.deleteCustomer)
 router.post('/:id/phones', customerController.postNewPhone)
 router.get('/:id/phones', customerController.getPhonesByCustomerId)
+router.patch('/:id/phones/:phoneId', customerController.updatePhone)
 router.delete(
   '/:id/phones/:phoneId',
   customerController.deletePhoneFromCustomer,

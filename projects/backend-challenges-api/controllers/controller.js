@@ -95,6 +95,23 @@ async function deletePhoneFromCustomer(req, res, next) {
   }
 }
 
+async function updatePhone(req, res, next) {
+  try {
+    const phoneId = Number(req.params.phoneId)
+    const customerId = Number(req.params.id)
+    const { phone } = req.body || {}
+
+    const updatedPhone = await customerService.updatePhone(
+      phoneId,
+      customerId,
+      phone,
+    )
+    return res.status(200).json(updatedPhone)
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -107,4 +124,5 @@ module.exports = {
   deletePhoneFromCustomer,
   getPhonesAndCustomerName,
   getPhoneByNumber,
+  updatePhone,
 }

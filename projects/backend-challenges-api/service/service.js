@@ -109,6 +109,30 @@ async function deletePhoneFromCustomer(customerId, phoneId) {
   return changes
 }
 
+async function updatePhone(phoneId, custumerId, newPhone) {
+  await getCustomersByIdOrThrow(custumerId)
+
+  if (typeof newPhone !== 'string' || newPhone.trim() === '') {
+    throw new AppError('Invalid phone', 400)
+  }
+
+  if (Number.isNaN(phoneId) || phoneId < 1) {
+    throw new AppError('Invalid phoneId format', 400)
+  }
+
+  const normalizedNewPhone = newPhone.replace(/\D/g, '')
+  if (normalizedNewPhone === '') {
+    throw new AppError('Invalid normalizedPhone', 400)
+  }
+  const updatedNewPhone = await customerRepository.updatePhone(
+    normalizedNewPhone,
+    custumerId,
+    phoneId,
+  )
+
+  return updatedNewPhone
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -121,4 +145,5 @@ module.exports = {
   deletePhoneFromCustomer,
   getPhonesAndCustomerName,
   getPhoneByNumber,
+  updatePhone,
 }
