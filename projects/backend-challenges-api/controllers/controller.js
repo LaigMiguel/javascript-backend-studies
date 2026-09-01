@@ -101,12 +101,8 @@ async function updatePhone(req, res, next) {
     const customerId = Number(req.params.id)
     const { phone } = req.body || {}
 
-    const updatedPhone = await customerService.updatePhone(
-      phoneId,
-      customerId,
-      phone,
-    )
-    return res.status(200).json(updatedPhone)
+    await customerService.updatePhone(phoneId, customerId, phone)
+    return res.status(204).send()
   } catch (error) {
     next(error)
   }

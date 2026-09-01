@@ -124,13 +124,15 @@ async function updatePhone(phoneId, custumerId, newPhone) {
   if (normalizedNewPhone === '') {
     throw new AppError('Invalid normalizedPhone', 400)
   }
-  const updatedNewPhone = await customerRepository.updatePhone(
+  const changes = await customerRepository.updatePhone(
     normalizedNewPhone,
     custumerId,
     phoneId,
   )
 
-  return updatedNewPhone
+  if (changes === 0) {
+    throw new AppError('Phone not found', 404)
+  }
 }
 
 async function getCustomerWithPhones(customerId) {

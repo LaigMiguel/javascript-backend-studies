@@ -170,12 +170,12 @@ function updatePhone(newPhone, phoneId, customerId) {
     db.run(
       'UPDATE phones SET phone = ? WHERE phones.id = ? AND phones.customer_id = ?',
       [newPhone, customerId, phoneId],
-      (error) => {
+      function (error) {
         if (error) {
           reject(error)
           return
         }
-        resolve()
+        resolve(this.changes)
       },
     )
   })
