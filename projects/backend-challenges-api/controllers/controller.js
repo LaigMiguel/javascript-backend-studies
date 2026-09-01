@@ -112,6 +112,18 @@ async function updatePhone(req, res, next) {
   }
 }
 
+async function getCustomerWithPhones(req, res, next) {
+  try {
+    const customerId = Number(req.params.id)
+    const customerWithPhones =
+      await customerService.getCustomerWithPhones(customerId)
+
+    return res.status(200).json(customerWithPhones)
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -125,4 +137,5 @@ module.exports = {
   getPhonesAndCustomerName,
   getPhoneByNumber,
   updatePhone,
+  getCustomerWithPhones,
 }

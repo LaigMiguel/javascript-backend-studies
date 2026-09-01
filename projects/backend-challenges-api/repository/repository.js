@@ -181,6 +181,22 @@ function updatePhone(newPhone, phoneId, customerId) {
   })
 }
 
+function getCustomerWithPhones(cutomerId) {
+  return new Promise((resolve, reject) => {
+    db.all(
+      'SELECT users.id AS customer_id, users.name, phones.id AS phone_id, phones.phone FROM users LEFT JOIN phones ON phones.customer_id = users.id WHERE users.id = ?',
+      [cutomerId],
+      (error, rows) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(rows)
+      },
+    )
+  })
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -194,4 +210,5 @@ module.exports = {
   getPhonesAndCustomerName,
   getPhoneByNumber,
   updatePhone,
+  getCustomerWithPhones,
 }

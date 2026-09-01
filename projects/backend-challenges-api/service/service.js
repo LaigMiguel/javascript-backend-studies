@@ -133,6 +133,28 @@ async function updatePhone(phoneId, custumerId, newPhone) {
   return updatedNewPhone
 }
 
+async function getCustomerWithPhones(customerId) {
+  await getCustomersByIdOrThrow(customerId)
+
+  const customerWithPhones =
+    await customerRepository.getCustomerWithPhones(customerId)
+
+  const customer = customerWithPhones.reduce(
+    (acc, row) => {
+      acc.id = row.customer_id
+      acc.name = row.name
+
+      if (row.phone) {
+        acc.phones.push({ id: row.phone_id, phone: row.phone })
+      }
+
+      return acc
+    },
+    { id: null, name: null, phones: [] },
+  )
+  return customer
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -146,4 +168,5 @@ module.exports = {
   getPhonesAndCustomerName,
   getPhoneByNumber,
   updatePhone,
+  getCustomerWithPhones,
 }
