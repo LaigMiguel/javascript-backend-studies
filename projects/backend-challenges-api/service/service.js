@@ -49,6 +49,15 @@ async function updateCustomer(name, id) {
 }
 async function deleteCustomer(id) {
   await getCustomersByIdOrThrow(id)
+
+  const phones = await customerRepository.getPhonesByCustomerId(id)
+  if (phones.length > 0) {
+    throw new AppError(
+      "Customer can't be deleted (phones still registered)",
+      409,
+    )
+  }
+
   await customerRepository.deleteCustomer(id)
 }
 
