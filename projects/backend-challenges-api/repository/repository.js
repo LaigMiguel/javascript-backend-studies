@@ -213,6 +213,22 @@ function getCustomerActive(id) {
   })
 }
 
+function updateCustomerActiveStatus(newStatus, customerId) {
+  return new Promise((resolve, reject) => {
+    db.run(
+      'UPDATE users SET active = ? WHERE users.id = ?',
+      [newStatus, customerId],
+      function (error) {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(this.changes)
+      },
+    )
+  })
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -228,4 +244,5 @@ module.exports = {
   updatePhone,
   getCustomerWithPhones,
   getCustomerActive,
+  updateCustomerActiveStatus,
 }

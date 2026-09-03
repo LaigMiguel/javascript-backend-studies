@@ -166,6 +166,19 @@ async function getCustomerWithPhones(customerId) {
   return customer
 }
 
+async function updateCustomerActiveStatus(newStatus, customerId) {
+  await getCustomersByIdOrThrow(customerId)
+
+  if (newStatus !== 0 && newStatus !== 1) {
+    throw new AppError('Invalid status', 400)
+  }
+
+  await customerRepository.updateCustomerActiveStatus(newStatus, customerId)
+
+  const customer = await getCustomersByIdOrThrow(customerId)
+  return customer
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -180,4 +193,5 @@ module.exports = {
   getPhoneByNumber,
   updatePhone,
   getCustomerWithPhones,
+  updateCustomerActiveStatus,
 }

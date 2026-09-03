@@ -18,5 +18,6 @@ router.delete(
   '/:id/phones/:phoneId',
   customerController.deletePhoneFromCustomer,
 )
+router.patch('/:id/status', customerController.updateCustomerActiveStatus)
 
 module.exports = router

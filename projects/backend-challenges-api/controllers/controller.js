@@ -120,6 +120,21 @@ async function getCustomerWithPhones(req, res, next) {
   }
 }
 
+async function updateCustomerActiveStatus(req, res, next) {
+  try {
+    const customerId = Number(req.params.id)
+    const { active } = req.body || {}
+
+    const updatedCustomer = await customerService.updateCustomerActiveStatus(
+      active,
+      customerId,
+    )
+    return res.status(200).json(updatedCustomer)
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -134,4 +149,5 @@ module.exports = {
   getPhoneByNumber,
   updatePhone,
   getCustomerWithPhones,
+  updateCustomerActiveStatus,
 }
