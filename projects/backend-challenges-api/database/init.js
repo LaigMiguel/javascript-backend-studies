@@ -4,7 +4,8 @@ db.run(
   `
   CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT
+    name TEXT,
+    active INTEGER NOT NULL DEFAULT 1
   )
 `,
   (error) => {

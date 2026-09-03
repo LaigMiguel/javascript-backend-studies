@@ -49,11 +49,11 @@ async function updateCustomer(name, id) {
 }
 async function deleteCustomer(id) {
   await getCustomersByIdOrThrow(id)
-
+  const active = await customerRepository.getCustomerActive(id)
   const phones = await customerRepository.getPhonesByCustomerId(id)
-  if (phones.length > 0) {
+  if (phones.length > 0 || active.active === 0) {
     throw new AppError(
-      "Customer can't be deleted (phones still registered)",
+      "Customer can't be deleted (phones still registered or customer is inactive)",
       409,
     )
   }

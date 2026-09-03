@@ -197,6 +197,22 @@ function getCustomerWithPhones(cutomerId) {
   })
 }
 
+function getCustomerActive(id) {
+  return new Promise((resolve, reject) => {
+    db.get(
+      'SELECT users.active FROM users WHERE users.id = ?',
+      [id],
+      (error, row) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(row)
+      },
+    )
+  })
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -211,4 +227,5 @@ module.exports = {
   getPhoneByNumber,
   updatePhone,
   getCustomerWithPhones,
+  getCustomerActive,
 }
