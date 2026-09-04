@@ -229,6 +229,21 @@ function updateCustomerActiveStatus(newStatus, customerId) {
   })
 }
 
+function getCustomersWithoutPhones() {
+  return new Promise((resolve, reject) => {
+    db.all(
+      'SELECT users.* FROM users LEFT JOIN phones ON users.id = phones.customer_id WHERE phones.id IS NULL',
+      (error, rows) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(rows)
+      },
+    )
+  })
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -245,4 +260,5 @@ module.exports = {
   getCustomerWithPhones,
   getCustomerActive,
   updateCustomerActiveStatus,
+  getCustomersWithoutPhones,
 }

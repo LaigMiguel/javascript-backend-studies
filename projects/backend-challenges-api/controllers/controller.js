@@ -135,6 +135,15 @@ async function updateCustomerActiveStatus(req, res, next) {
   }
 }
 
+async function getCustomersWithoutPhones(req, res, next) {
+  try {
+    const customers = await customerService.getCustomersWithoutPhones()
+    return res.status(200).json(customers)
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -150,4 +159,5 @@ module.exports = {
   updatePhone,
   getCustomerWithPhones,
   updateCustomerActiveStatus,
+  getCustomersWithoutPhones,
 }

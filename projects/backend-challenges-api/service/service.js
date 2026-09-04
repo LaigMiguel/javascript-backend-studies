@@ -179,6 +179,10 @@ async function updateCustomerActiveStatus(newStatus, customerId) {
   return customer
 }
 
+async function getCustomersWithoutPhones() {
+  return await customerRepository.getCustomersWithoutPhones()
+}
+
 module.exports = {
   postNewCustomer,
   getCustomers,
@@ -194,4 +198,5 @@ module.exports = {
   updatePhone,
   getCustomerWithPhones,
   updateCustomerActiveStatus,
+  getCustomersWithoutPhones,
 }
