@@ -68,6 +68,10 @@ async function getPhonesAndCustomerName() {
 
 async function postNewPhone(phone, id) {
   await getCustomersByIdOrThrow(id)
+  const active = await customerRepository.getCustomerActive(id)
+  if (active === 0) {
+    throw new AppError('Customer is inactive', 409)
+  }
 
   if (typeof phone !== 'string' || phone.trim() === '') {
     throw new AppError('Invalid phone', 400)
