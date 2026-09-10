@@ -52,7 +52,7 @@ async function updateCategorieName(newName, id) {
     normalizedName,
     id,
   )
-  if (changes.changes === 0) {
+  if (changes === 0) {
     throw new AppError('Unable to update categorie', 404)
   }
 
