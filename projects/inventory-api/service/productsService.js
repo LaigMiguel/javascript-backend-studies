@@ -41,7 +41,19 @@ async function getAllProducts() {
   return await productsRepository.getAllProducts()
 }
 
+async function getProductById(id) {
+  if (!Number.isInteger(id)) {
+    throw new AppError('Invalid product id', 400)
+  }
+  const product = await productsRepository.getProductById(id)
+  if (!product) {
+    throw new AppError('Product not found', 404)
+  }
+  return product
+}
+
 module.exports = {
   postProduct,
   getAllProducts,
+  getProductById,
 }

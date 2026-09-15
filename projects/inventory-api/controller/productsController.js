@@ -31,7 +31,18 @@ async function getAllProducts(req, res, next) {
   }
 }
 
+async function getProductById(req, res, next) {
+  try {
+    const id = Number(req.params.id)
+    const product = await producstService.getProductById(id)
+    return res.status(200).json(product)
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   postProduct,
   getAllProducts,
+  getProductById,
 }
