@@ -4,3 +4,4 @@ const productsRoutes = express.Router()
 module.exports = productsRoutes
 
 productsRoutes.post('/', productsController.postProduct)
+productsRoutes.get('/', productsController.getAllProducts)

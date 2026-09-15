@@ -22,6 +22,16 @@ async function postProduct(req, res, next) {
   }
 }
 
+async function getAllProducts(req, res, next) {
+  try {
+    const products = await producstService.getAllProducts()
+    return res.status(200).json(products)
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   postProduct,
+  getAllProducts,
 }
