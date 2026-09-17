@@ -1,4 +1,4 @@
-const producstService = require('../service/productsService')
+const productsService = require('../service/productsService')
 
 async function postProduct(req, res, next) {
   try {
@@ -10,7 +10,7 @@ async function postProduct(req, res, next) {
     const numericCategoryId = Number(category_id)
     const numericQuantity = Number(quantity)
 
-    const newProduct = await producstService.postProduct(
+    const newProduct = await productsService.postProduct(
       name,
       numericPrice,
       numericCategoryId,
@@ -24,7 +24,7 @@ async function postProduct(req, res, next) {
 
 async function getAllProducts(req, res, next) {
   try {
-    const products = await producstService.getAllProducts()
+    const products = await productsService.getAllProducts()
     return res.status(200).json(products)
   } catch (error) {
     next(error)
@@ -34,8 +34,25 @@ async function getAllProducts(req, res, next) {
 async function getProductById(req, res, next) {
   try {
     const id = Number(req.params.id)
-    const product = await producstService.getProductById(id)
+    const product = await productsService.getProductById(id)
     return res.status(200).json(product)
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function updateProduct(req, res, next) {
+  try {
+    const { name, price, category_id, quantity } = req.body
+    const id = Number(req.params.id)
+    const updatedProduct = await productsService.updateProduct(
+      name,
+      price,
+      category_id,
+      quantity,
+      id,
+    )
+    return res.status(200).json(updatedProduct)
   } catch (error) {
     next(error)
   }
@@ -45,4 +62,5 @@ module.exports = {
   postProduct,
   getAllProducts,
   getProductById,
+  updateProduct,
 }

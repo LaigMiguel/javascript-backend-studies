@@ -6,3 +6,4 @@ module.exports = productsRoutes
 productsRoutes.post('/', productsController.postProduct)
 productsRoutes.get('/', productsController.getAllProducts)
 productsRoutes.get('/:id', productsController.getProductById)
+productsRoutes.patch('/:id', productsController.updateProduct)

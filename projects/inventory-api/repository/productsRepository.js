@@ -51,8 +51,26 @@ function getProductById(id) {
   })
 }
 
+function updateProduct(name, price, category_id, quantity, id) {
+  return new Promise((resolve, reject) => {
+    db.run(
+      `UPDATE products SET name = ?, price = ?, category_id = ?, quantity = ?
+      WHERE id = ?`,
+      [name, price, category_id, quantity, id],
+      (error) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve()
+      },
+    )
+  })
+}
+
 module.exports = {
   postProduct,
   getAllProducts,
   getProductById,
+  updateProduct,
 }
