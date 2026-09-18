@@ -114,9 +114,18 @@ async function updateProduct(name, price, category_id, quantity, id) {
   return updatedProduct
 }
 
+async function deleteProduct(id) {
+  await getProductById(id)
+  const changes = await productsRepository.deleteProduct(id)
+  if (changes === 0) {
+    throw new AppError('Internal server error', 500)
+  }
+}
+
 module.exports = {
   postProduct,
   getAllProducts,
   getProductById,
   updateProduct,
+  deleteProduct,
 }
