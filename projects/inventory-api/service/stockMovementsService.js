@@ -27,6 +27,32 @@ async function registerStockMovement(productId, type, quantity) {
   )
 }
 
+async function getStockMovements() {
+  return await stockMovementsRepository.getStockMovements()
+}
+
+async function getStockMovementsByProductId(productId) {
+  await productsService.getProductById(productId)
+
+  return await stockMovementsRepository.getStockMovementsByProductId(productId)
+}
+
+async function getStockMovementById(id) {
+  if (!Number.isInteger(id)) {
+    throw new AppError('Invalid id', 400)
+  }
+
+  const stockMovement = await stockMovementsRepository.getStockMovementById(id)
+  if (!stockMovement) {
+    throw new AppError('No stock movement found', 404)
+  }
+
+  return stockMovement
+}
+
 module.exports = {
   registerStockMovement,
+  getStockMovements,
+  getStockMovementsByProductId,
+  getStockMovementById,
 }

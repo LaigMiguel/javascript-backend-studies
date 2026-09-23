@@ -53,6 +53,60 @@ function registerStockMovement(productId, type, quantity) {
   })
 }
 
+function getStockMovements() {
+  return new Promise((resolve, reject) => {
+    db.all(
+      `SELECT stock_movements.*, products.name FROM stock_movements JOIN products ON products.id = stock_movements.product_id`,
+      (error, rows) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(rows)
+      },
+    )
+  })
+}
+
+function getStockMovementsByProductId(productId) {
+  return new Promise((resolve, reject) => {
+    db.all(
+      `SELECT stock_movements.*, products.name FROM stock_movements 
+      JOIN products ON products.id = stock_movements.product_id 
+      WHERE stock_movements.product_id = ?`,
+      [productId],
+      (error, rows) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(rows)
+      },
+    )
+  })
+}
+
+function getStockMovementById(id) {
+  return new Promise((resolve, reject) => {
+    db.get(
+      `SELECT stock_movements.*, products.name FROM stock_movements
+      JOIN products ON products.id = stock_movements.product_id
+      WHERE stock_movements.id = ?`,
+      [id],
+      (error, row) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(row)
+      },
+    )
+  })
+}
+
 module.exports = {
   registerStockMovement,
+  getStockMovements,
+  getStockMovementsByProductId,
+  getStockMovementById,
 }
