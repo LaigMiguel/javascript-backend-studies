@@ -33,8 +33,29 @@ async function getClientByIdOrThrow(id) {
   return client
 }
 
+async function updateClient(name, id) {
+  await getClientByIdOrThrow(id)
+
+  if (typeof name !== 'string' || name.trim() === '') {
+    throw new AppError('Invalid name', 400)
+  }
+
+  const newName = name.trim().toLowerCase()
+
+  if (!/^[A-Za-zà-ÿ ]+$/.test(newName)) {
+    throw new AppError('Name contains invalid characters', 400)
+  }
+
+  await clienteRepository.updateClient(newName, id)
+
+  const client = await getClientByIdOrThrow(id)
+
+  return client
+}
+
 module.exports = {
   postClient,
   getClients,
   getClientByIdOrThrow,
+  updateClient,
 }

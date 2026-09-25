@@ -40,8 +40,25 @@ function getClientByIdOrThrow(id) {
   })
 }
 
+function updateClient(newName, id) {
+  return new Promise((resolve, reject) => {
+    db.run(
+      'UPDATE clients SET name = ? WHERE clients.id = ?',
+      [newName, id],
+      (error) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve()
+      },
+    )
+  })
+}
+
 module.exports = {
   postClient,
   getClients,
   getClientByIdOrThrow,
+  updateClient,
 }

@@ -31,8 +31,22 @@ async function getClientByIdOrThrow(req, res, next) {
   }
 }
 
+async function updateClient(req, res, next) {
+  try {
+    const { name } = req.body || {}
+    const id = Number(req.params.id)
+
+    const updatedClient = await clientService.updateClient(name, id)
+
+    return res.status(200).json(updatedClient)
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   postClient,
   getClients,
   getClientByIdOrThrow,
+  updateClient,
 }
