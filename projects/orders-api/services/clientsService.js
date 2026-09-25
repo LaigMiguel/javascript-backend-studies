@@ -53,9 +53,20 @@ async function updateClient(name, id) {
   return client
 }
 
+async function deleteClient(id) {
+  if (Number.isNaN(id)) {
+    throw new AppError('Invalid id', 400)
+  }
+
+  await getClientByIdOrThrow(id)
+
+  await clienteRepository.deleteClient(id)
+}
+
 module.exports = {
   postClient,
   getClients,
   getClientByIdOrThrow,
   updateClient,
+  deleteClient,
 }

@@ -56,9 +56,22 @@ function updateClient(newName, id) {
   })
 }
 
+function deleteClient(id) {
+  return new Promise((resolve, reject) => {
+    db.run('DELETE FROM clients WHERE clients.id = ?', [id], function (error) {
+      if (error) {
+        reject(error)
+        return
+      }
+      resolve()
+    })
+  })
+}
+
 module.exports = {
   postClient,
   getClients,
   getClientByIdOrThrow,
   updateClient,
+  deleteClient,
 }

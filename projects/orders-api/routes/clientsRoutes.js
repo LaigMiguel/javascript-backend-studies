@@ -6,5 +6,6 @@ clientRoute.post('/', clientsController.postClient)
 clientRoute.get('/', clientsController.getClients)
 clientRoute.get('/:id', clientsController.getClientByIdOrThrow)
 clientRoute.patch('/:id', clientsController.updateClient)
+clientRoute.delete('/:id', clientsController.deleteClient)
 
 module.exports = clientRoute

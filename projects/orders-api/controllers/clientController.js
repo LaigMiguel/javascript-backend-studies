@@ -44,9 +44,19 @@ async function updateClient(req, res, next) {
   }
 }
 
+async function deleteClient(req, res, next) {
+  try {
+    const id = Number(req.params.id)
+    await clientService.deleteClient(id)
+    return res.status(204).send()
+  } catch (error) {
+    next(error)
+  }
+}
 module.exports = {
   postClient,
   getClients,
   getClientByIdOrThrow,
   updateClient,
+  deleteClient,
 }
