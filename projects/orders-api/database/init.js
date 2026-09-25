@@ -1,6 +1,6 @@
 const db = require('./database.js')
 
-db.run(`CREATE TABLE IF NOT EXISTS client(
+db.run(`CREATE TABLE IF NOT EXISTS clients(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT      
 )`)
@@ -16,7 +16,7 @@ db.run(`CREATE TABLE IF NOT EXISTS orders(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         client_id INTEGER,
         status TEXT,
-        FOREIGN KEY (client_id) REFERENCES client(id)
+        FOREIGN KEY (client_id) REFERENCES clients(id)
 
 )`)
 

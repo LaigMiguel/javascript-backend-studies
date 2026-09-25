@@ -9,8 +9,8 @@ const errorMiddleware = require('./middlewares/errorMiddleware')
 
 app.use(express.json())
 
-app.use('/client', clientsRouter)
-app.use('/product', productsRouter)
+app.use('/clients', clientsRouter)
+app.use('/products', productsRouter)
 app.use('/orders', ordersRouter)
 app.use('/productsOrder', productsOrderRouter)
 app.use('/stockMovements', stockMovementsRouter)
