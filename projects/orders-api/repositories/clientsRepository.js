@@ -28,7 +28,20 @@ function getClients() {
   })
 }
 
+function getClientByIdOrThrow(id) {
+  return new Promise((resolve, reject) => {
+    db.get('SELECT * FROM clients WHERE clients.id = ?', [id], (error, row) => {
+      if (error) {
+        reject(error)
+        return
+      }
+      resolve(row)
+    })
+  })
+}
+
 module.exports = {
   postClient,
   getClients,
+  getClientByIdOrThrow,
 }

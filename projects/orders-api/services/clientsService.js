@@ -20,7 +20,21 @@ async function getClients() {
   return await clienteRepository.getClients()
 }
 
+async function getClientByIdOrThrow(id) {
+  if (Number.isNaN(id)) {
+    throw new AppError('Invalid id', 400)
+  }
+
+  const client = await clienteRepository.getClientByIdOrThrow(id)
+  if (!client) {
+    throw new AppError('Client not found', 404)
+  }
+
+  return client
+}
+
 module.exports = {
   postClient,
   getClients,
+  getClientByIdOrThrow,
 }

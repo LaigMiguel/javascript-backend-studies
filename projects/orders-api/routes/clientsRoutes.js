@@ -4,5 +4,6 @@ const clientsController = require('../controllers/clientController')
 
 clientRoute.post('/', clientsController.postClient)
 clientRoute.get('/', clientsController.getClients)
+clientRoute.get('/:id', clientsController.getClientByIdOrThrow)
 
 module.exports = clientRoute
