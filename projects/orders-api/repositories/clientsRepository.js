@@ -16,6 +16,19 @@ function postClient(name) {
   })
 }
 
+function getClients() {
+  return new Promise((resolve, reject) => {
+    db.all('SELECT * FROM clients', (error, rows) => {
+      if (error) {
+        reject(error)
+        return
+      }
+      resolve(rows)
+    })
+  })
+}
+
 module.exports = {
   postClient,
+  getClients,
 }

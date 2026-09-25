@@ -16,6 +16,11 @@ async function postClient(name) {
   return newClient
 }
 
+async function getClients() {
+  return await clienteRepository.getClients()
+}
+
 module.exports = {
   postClient,
+  getClients,
 }

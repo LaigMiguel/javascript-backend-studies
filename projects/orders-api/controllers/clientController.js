@@ -12,6 +12,16 @@ async function postClient(req, res, next) {
   }
 }
 
+async function getClients(req, res, next) {
+  try {
+    const clients = await clientService.getClients()
+    return res.status(200).json(clients)
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   postClient,
+  getClients,
 }
