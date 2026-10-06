@@ -36,7 +36,21 @@ async function getProducts() {
   return await productsRepository.getProducts()
 }
 
+async function getProductsByIdOrThrow(id) {
+  if (Number.isNaN(id)) {
+    throw new AppError('Invalid id', 400)
+  }
+
+  const product = await productsRepository.getProductsById(id)
+  if (!product) {
+    throw new AppError('Product not found', 404)
+  }
+
+  return product
+}
+
 module.exports = {
   postProduct,
   getProducts,
+  getProductsByIdOrThrow,
 }

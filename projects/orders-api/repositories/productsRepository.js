@@ -34,7 +34,20 @@ function getProducts() {
   })
 }
 
+function getProductsById(id) {
+  return new Promise((resolve, reject) => {
+    db.get(`SELECT * FROM product WHERE id = ?`, [id], (error, row) => {
+      if (error) {
+        reject(error)
+        return
+      }
+      resolve(row)
+    })
+  })
+}
+
 module.exports = {
   postProduct,
   getProducts,
+  getProductsById,
 }
