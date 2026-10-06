@@ -22,6 +22,19 @@ function postProduct(name, stockQuantity, price) {
   })
 }
 
+function getProducts() {
+  return new Promise((resolve, reject) => {
+    db.all(`SELECT * FROM product`, (error, rows) => {
+      if (error) {
+        reject(error)
+        return
+      }
+      resolve(rows)
+    })
+  })
+}
+
 module.exports = {
   postProduct,
+  getProducts,
 }

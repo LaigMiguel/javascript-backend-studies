@@ -32,6 +32,11 @@ async function postProduct(name, stock, price) {
   return newProduct
 }
 
+async function getProducts() {
+  return await productsRepository.getProducts()
+}
+
 module.exports = {
   postProduct,
+  getProducts,
 }
