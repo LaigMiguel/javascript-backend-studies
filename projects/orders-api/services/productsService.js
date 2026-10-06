@@ -49,8 +49,50 @@ async function getProductsByIdOrThrow(id) {
   return product
 }
 
+async function updateProduct(id, name, stockQuantity, price) {
+  const product = await getProductsByIdOrThrow(id)
+
+  if (name === undefined) {
+    name = product.name
+  }
+  if (stockQuantity === undefined) {
+    stockQuantity = product.stock_quantity
+  }
+  if (price === undefined) {
+    price = product.price
+  }
+
+  const normalizedName = name.trim().toLowerCase()
+  if (!/^[a-zA-Zà-ÿ ]+$/.test(normalizedName)) {
+    throw new AppError('Name contains invalid characters', 400)
+  }
+
+  if (!Number.isInteger(stockQuantity) || stockQuantity < 0) {
+    throw new AppError('Stock quantity amount is invalid', 400)
+  }
+
+  if (
+    !Number.isFinite(price) ||
+    price <= 0 ||
+    Math.abs(price * 100 - Math.round(price * 100)) > 0.000001
+  ) {
+    throw new AppError('Invalid price amount', 400)
+  }
+
+  await productsRepository.updateProduct(
+    id,
+    normalizedName,
+    stockQuantity,
+    price,
+  )
+
+  const updatedProduct = await getProductsByIdOrThrow(id)
+  return updatedProduct
+}
+
 module.exports = {
   postProduct,
   getProducts,
   getProductsByIdOrThrow,
+  updateProduct,
 }

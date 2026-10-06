@@ -33,8 +33,25 @@ async function getProductById(req, res, next) {
   }
 }
 
+async function updateProduct(req, res, next) {
+  try {
+    const id = Number(req.params.id)
+    const { name, stock_quantity, price } = req.body || {}
+    const updatedProduct = await productsService.updateProduct(
+      id,
+      name,
+      stock_quantity,
+      price,
+    )
+    return res.status(200).json(updatedProduct)
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   postProduct,
   getProducts,
   getProductById,
+  updateProduct,
 }
