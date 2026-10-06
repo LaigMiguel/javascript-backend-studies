@@ -90,9 +90,15 @@ async function updateProduct(id, name, stockQuantity, price) {
   return updatedProduct
 }
 
+async function deleteProduct(id) {
+  await getProductsByIdOrThrow(id)
+  await productsRepository.deleteProduct(id)
+}
+
 module.exports = {
   postProduct,
   getProducts,
   getProductsByIdOrThrow,
   updateProduct,
+  deleteProduct,
 }

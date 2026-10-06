@@ -62,9 +62,22 @@ function updateProduct(id, name, stockQuantity, price) {
   })
 }
 
+function deleteProduct(id) {
+  return new Promise((resolve, reject) => {
+    db.run(`DELETE FROM product WHERE id = ?`, [id], (error) => {
+      if (error) {
+        reject(error)
+        return
+      }
+      resolve()
+    })
+  })
+}
+
 module.exports = {
   postProduct,
   getProducts,
   getProductsById,
   updateProduct,
+  deleteProduct,
 }
