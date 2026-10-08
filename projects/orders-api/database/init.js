@@ -15,7 +15,7 @@ db.run(`CREATE TABLE IF NOT EXISTS product(
 db.run(`CREATE TABLE IF NOT EXISTS orders(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         client_id INTEGER,
-        status TEXT,
+        status TEXT DEFAULT "Pending",
         FOREIGN KEY (client_id) REFERENCES clients(id)
 
 )`)
