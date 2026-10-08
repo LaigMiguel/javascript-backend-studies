@@ -33,7 +33,20 @@ function getOrders() {
   })
 }
 
+function getOrdersById(orderId) {
+  return new Promise((resolve, reject) => {
+    db.get('SELECT * FROM orders WHERE id = ?', [orderId], (error, row) => {
+      if (error) {
+        reject(error)
+        return
+      }
+      resolve(row)
+    })
+  })
+}
+
 module.exports = {
   postOrder,
   getOrders,
+  getOrdersById,
 }
