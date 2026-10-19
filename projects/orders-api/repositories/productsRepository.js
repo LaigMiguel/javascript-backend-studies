@@ -74,10 +74,37 @@ function deleteProduct(id) {
   })
 }
 
+function updateStockQuantity(id, quantity, type) {
+  return new Promise((resolve, reject) => {
+    const operator = type === 'entry' ? '+' : '-'
+    const stockCondition = type === 'exit' ? 'AND stock_quantity >= ?' : ''
+    const params = type === 'exit' ? [quantity, id, quantity] : [quantity, id]
+    db.run(
+      `
+      UPDATE product SET stock_quantity = stock_quantity ${operator} ? WHERE id = ? ${stockCondition}
+      `,
+      params,
+      function (error) {
+        if (error) {
+          reject(error)
+          return
+        }
+
+        if (this.changes === 0) {
+          reject(new Error('Product not found or insufficient stock'))
+          return
+        }
+        resolve()
+      },
+    )
+  })
+}
+
 module.exports = {
   postProduct,
   getProducts,
   getProductsById,
   updateProduct,
   deleteProduct,
+  updateStockQuantity,
 }
