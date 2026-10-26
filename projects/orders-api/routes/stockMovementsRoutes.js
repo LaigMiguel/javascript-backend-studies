@@ -4,5 +4,6 @@ const stockMovementsController = require('../controllers/stockMovementsControlle
 
 stockMovementsRoute.post('/', stockMovementsController.postStockMovement)
 stockMovementsRoute.get('/', stockMovementsController.getStockMovements)
+stockMovementsRoute.get('/:id', stockMovementsController.getStockMovementById)
 
 module.exports = stockMovementsRoute

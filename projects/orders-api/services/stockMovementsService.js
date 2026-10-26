@@ -29,7 +29,21 @@ async function getStockMovements() {
   return await stockMovementsRepository.getStockMovements()
 }
 
+async function getStockMovementByIdOrThrow(id) {
+  if (Number.isNaN(id)) {
+    throw new AppError('Invalid id', 400)
+  }
+
+  const stockMovent = await stockMovementsRepository.getStockMovementById(id)
+  if (!stockMovent) {
+    throw new AppError('Stock movement not found', 404)
+  }
+
+  return stockMovent
+}
+
 module.exports = {
   postStockMovement,
   getStockMovements,
+  getStockMovementByIdOrThrow,
 }

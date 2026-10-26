@@ -33,7 +33,20 @@ function getStockMovements() {
   })
 }
 
+function getStockMovementById(id) {
+  return new Promise((resolve, reject) => {
+    db.get(`SELECT * FROM stock_movement WHERE id = ?`, [id], (error, row) => {
+      if (error) {
+        reject(error)
+        return
+      }
+      resolve(row)
+    })
+  })
+}
+
 module.exports = {
   postStockMovement,
   getStockMovements,
+  getStockMovementById,
 }

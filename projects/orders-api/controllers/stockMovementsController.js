@@ -21,7 +21,19 @@ async function getStockMovements(req, res, next) {
   }
 }
 
+async function getStockMovementById(req, res, next) {
+  try {
+    const id = Number(req.params.id)
+    const stockMovement =
+      await stockMovementsService.getStockMovementByIdOrThrow(id)
+    return res.status(200).json(stockMovement)
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   postStockMovement,
   getStockMovements,
+  getStockMovementById,
 }
