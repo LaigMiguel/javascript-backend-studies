@@ -21,6 +21,19 @@ function postStockMovement(product_id, quantity, type) {
   })
 }
 
+function getStockMovements() {
+  return new Promise((resolve, reject) => {
+    db.all(`SELECT * FROM stock_movement`, (error, rows) => {
+      if (error) {
+        reject(error)
+        return
+      }
+      resolve(rows)
+    })
+  })
+}
+
 module.exports = {
   postStockMovement,
+  getStockMovements,
 }

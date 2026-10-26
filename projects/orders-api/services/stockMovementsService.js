@@ -25,6 +25,11 @@ async function postStockMovement(product_id, quantity, type) {
   await stockMovementsRepository.postStockMovement(product_id, quantity, type)
 }
 
+async function getStockMovements() {
+  return await stockMovementsRepository.getStockMovements()
+}
+
 module.exports = {
   postStockMovement,
+  getStockMovements,
 }

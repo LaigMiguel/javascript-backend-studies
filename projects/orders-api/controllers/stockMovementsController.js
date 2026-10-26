@@ -12,6 +12,16 @@ async function postStockMovement(req, res, next) {
   }
 }
 
+async function getStockMovements(req, res, next) {
+  try {
+    const stockMovements = await stockMovementsService.getStockMovements()
+    return res.status(200).json(stockMovements)
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   postStockMovement,
+  getStockMovements,
 }
