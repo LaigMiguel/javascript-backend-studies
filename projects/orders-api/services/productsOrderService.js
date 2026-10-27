@@ -54,6 +54,23 @@ async function postProductOrder(order_id, product_id, quantity) {
   }
 }
 
+async function getProductOrders() {
+  return await productsOrderRepository.getProductOrders()
+}
+
+async function getProductOrderByOrderIdOrThrow(order_id) {
+  await orderService.getOrderByIdOrThrow(order_id)
+  const productOrders =
+    await productsOrderRepository.getProductOrderByOrderId(order_id)
+  if (!productOrders) {
+    return new AppError('No product orders found', 404)
+  }
+
+  return productOrders
+}
+
 module.exports = {
   postProductOrder,
+  getProductOrders,
+  getProductOrderByOrderIdOrThrow,
 }

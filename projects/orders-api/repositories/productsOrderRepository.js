@@ -54,8 +54,38 @@ function updateProductOrderQuantity(order_id, product_id, quantity) {
   })
 }
 
+function getProductOrders() {
+  return new Promise((resolve, reject) => {
+    db.all(`SELECT * FROM products_order`, (error, rows) => {
+      if (error) {
+        reject(error)
+        return
+      }
+      resolve(rows)
+    })
+  })
+}
+
+function getProductOrderByOrderId(order_id) {
+  return new Promise((resolve, reject) => {
+    db.get(
+      `SELECT * FROM products_order WHERE order_id = ?`,
+      [order_id],
+      (error, row) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(row)
+      },
+    )
+  })
+}
+
 module.exports = {
   postProductOrder,
   searchOrderIdAndProductId,
   updateProductOrderQuantity,
+  getProductOrders,
+  getProductOrderByOrderId,
 }
