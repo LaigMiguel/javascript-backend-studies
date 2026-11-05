@@ -1,8 +1,7 @@
 const productsOrderRepository = require('../repositories/productsOrderRepository')
-const orderService = require('./ordersService')
+const orderRepository = require('../repositories/ordersRepository')
 const productService = require('./productsService')
 const AppError = require('../errors/AppError')
-const productsOrderRoute = require('../routes/productsOrderRoutes')
 
 async function postProductOrder(order_id, product_id, quantity) {
   const order = await orderService.getOrderByIdOrThrow(order_id)
@@ -59,11 +58,14 @@ async function getProductOrders() {
 }
 
 async function getProductOrderByOrderIdOrThrow(order_id) {
-  await orderService.getOrderByIdOrThrow(order_id)
+  const order = await orderRepository.getOrdersById(order_id)
+  if (!order) {
+    throw new AppError('No order found', 404)
+  }
   const productOrders =
-    await productsOrderRepository.getProductOrderByOrderId(order_id)
-  if (!productOrders) {
-    return new AppError('No product orders found', 404)
+    await productsOrderRepository.getProductsOrderByOrderId(order_id)
+  if (productOrders.length === 0) {
+    throw new AppError('No product orders found', 404)
   }
 
   return productOrders

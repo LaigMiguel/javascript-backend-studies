@@ -1,5 +1,6 @@
 const ordersRepository = require('../repositories/ordersRepository')
 const clientsService = require('./clientsService')
+const productsOrderService = require('./productsOrderService')
 const AppError = require('../errors/AppError')
 
 async function postOrder(clientId) {
@@ -23,6 +24,18 @@ async function getOrderByIdOrThrow(orderId) {
     throw new AppError('Order not found', 400)
   }
   return order
+}
+
+async function postOrderConfirmation(order_id) {
+  const order = await getOrderByIdOrThrow(order_id)
+  if (order.status !== 'Pending') {
+    throw new AppError('Status is not pending', 409)
+  }
+  const productsOrder =
+    await productsOrderService.getProductOrderByOrderIdOrThrow(order_id)
+  if (productsOrder.length === 0) {
+    throw new AppError('Order has no products', 400)
+  }
 }
 
 module.exports = {

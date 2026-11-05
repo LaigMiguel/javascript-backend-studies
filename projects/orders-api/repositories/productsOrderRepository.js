@@ -66,9 +66,9 @@ function getProductOrders() {
   })
 }
 
-function getProductOrderByOrderId(order_id) {
+function getProductsOrderByOrderId(order_id) {
   return new Promise((resolve, reject) => {
-    db.get(
+    db.all(
       `SELECT * FROM products_order WHERE order_id = ?`,
       [order_id],
       (error, row) => {
@@ -87,5 +87,5 @@ module.exports = {
   searchOrderIdAndProductId,
   updateProductOrderQuantity,
   getProductOrders,
-  getProductOrderByOrderId,
+  getProductsOrderByOrderId,
 }
