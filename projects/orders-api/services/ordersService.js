@@ -1,6 +1,7 @@
 const ordersRepository = require('../repositories/ordersRepository')
 const clientsService = require('./clientsService')
 const productsOrderService = require('./productsOrderService')
+const productsService = require('./productsService')
 const AppError = require('../errors/AppError')
 
 async function postOrder(clientId) {
@@ -35,6 +36,16 @@ async function postOrderConfirmation(order_id) {
     await productsOrderService.getProductOrderByOrderIdOrThrow(order_id)
   if (productsOrder.length === 0) {
     throw new AppError('Order has no products', 400)
+  }
+
+  for (const item of productsOrder) {
+    const product = await productsService.getProductsByIdOrThrow(
+      item.product_id,
+    )
+
+    if (item.stock_quantity > product.quantity) {
+      throw new AppError('Not enough products in stock', 400)
+    }
   }
 }
 
