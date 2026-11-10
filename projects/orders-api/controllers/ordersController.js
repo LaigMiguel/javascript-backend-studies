@@ -29,8 +29,19 @@ async function getOrderById(req, res, next) {
   }
 }
 
+async function postOrderConfirmation(req, res, next) {
+  try {
+    const id = Number(req.params.id)
+    await ordersService.postOrderConfirmation(id)
+    return res.status(200).json({ message: 'Order confirmed successfully' })
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   postOrder,
   getOrders,
   getOrderById,
+  postOrderConfirmation,
 }

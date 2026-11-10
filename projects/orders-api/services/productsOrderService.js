@@ -4,7 +4,10 @@ const productService = require('./productsService')
 const AppError = require('../errors/AppError')
 
 async function postProductOrder(order_id, product_id, quantity) {
-  const order = await orderService.getOrderByIdOrThrow(order_id)
+  const order = await orderRepository.getOrdersById(order_id)
+  if (!order) {
+    throw new AppError('Order not found', 404)
+  }
   if (order.status !== 'Pending') {
     throw new AppError('Order must be Pending to add products', 400)
   }

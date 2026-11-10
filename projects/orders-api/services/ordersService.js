@@ -43,9 +43,17 @@ async function postOrderConfirmation(order_id) {
       item.product_id,
     )
 
-    if (item.stock_quantity > product.quantity) {
+    if (item.quantity > product.stock_quantity) {
       throw new AppError('Not enough products in stock', 400)
     }
+  }
+
+  const ordersUpdated = await ordersRepository.postOrderConfirmation(
+    order_id,
+    productsOrder,
+  )
+  if (!ordersUpdated) {
+    throw new AppError('Orders could not be updated', 400)
   }
 }
 
@@ -53,4 +61,5 @@ module.exports = {
   postOrder,
   getOrders,
   getOrderByIdOrThrow,
+  postOrderConfirmation,
 }
