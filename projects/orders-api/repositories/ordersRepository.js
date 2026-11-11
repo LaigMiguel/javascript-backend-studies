@@ -113,9 +113,26 @@ function postOrderConfirmation(order_id, productsOrder) {
   })
 }
 
+function postCancelOrder(order_id) {
+  return new Promise((resolve, reject) => {
+    db.run(
+      'UPDATE orders SET status = ? WHERE id = ?',
+      ['Canceled', order_id],
+      function (error) {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(this.changes)
+      },
+    )
+  })
+}
+
 module.exports = {
   postOrder,
   getOrders,
   getOrdersById,
   postOrderConfirmation,
+  postCancelOrder,
 }

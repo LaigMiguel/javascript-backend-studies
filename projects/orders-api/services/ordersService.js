@@ -57,9 +57,18 @@ async function postOrderConfirmation(order_id) {
   }
 }
 
+async function postCancelOrder(order_id) {
+  const order = await getOrderByIdOrThrow(order_id)
+  if (order.status !== 'Pending') {
+    throw new AppError('Status is not pending', 409)
+  }
+  await ordersRepository.postCancelOrder(order_id)
+}
+
 module.exports = {
   postOrder,
   getOrders,
   getOrderByIdOrThrow,
   postOrderConfirmation,
+  postCancelOrder,
 }

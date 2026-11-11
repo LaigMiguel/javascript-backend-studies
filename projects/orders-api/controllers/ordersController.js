@@ -39,9 +39,20 @@ async function postOrderConfirmation(req, res, next) {
   }
 }
 
+async function postCancelOrder(req, res, next) {
+  try {
+    const id = Number(req.params.id)
+    await ordersService.postCancelOrder(id)
+    return res.status(200).json({ message: 'Order canceled' })
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   postOrder,
   getOrders,
   getOrderById,
   postOrderConfirmation,
+  postCancelOrder,
 }
