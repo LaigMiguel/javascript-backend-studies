@@ -41,12 +41,17 @@ async function postProductOrder(order_id, product_id, quantity) {
     )
   }
 
-  await productsOrderRepository.updateProductOrderQuantityAndPrice(
-    order_id,
-    product_id,
-    newQuantity,
-    product_price,
-  )
+  const changes =
+    await productsOrderRepository.updateProductOrderQuantityAndPrice(
+      order_id,
+      product_id,
+      newQuantity,
+      product_price,
+    )
+
+  if (changes === 0) {
+    throw new AppError('Failed to update product order', 404)
+  }
 
   return {
     order_id,
