@@ -26,7 +26,6 @@ async function postProductOrder(order_id, product_id, quantity) {
 
   if (existingProductOrder !== undefined) {
     newQuantity = existingProductOrder.quantity + quantity
-    product_price = existingProductOrder.product_price
   }
 
   if (newQuantity > product.stock_quantity) {
@@ -42,10 +41,11 @@ async function postProductOrder(order_id, product_id, quantity) {
     )
   }
 
-  await productsOrderRepository.updateProductOrderQuantity(
+  await productsOrderRepository.updateProductOrderQuantityAndPrice(
     order_id,
     product_id,
     newQuantity,
+    product_price,
   )
 
   return {

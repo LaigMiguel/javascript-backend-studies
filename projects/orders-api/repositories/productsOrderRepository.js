@@ -38,17 +38,22 @@ function searchOrderIdAndProductId(order_id, product_id) {
   })
 }
 
-function updateProductOrderQuantity(order_id, product_id, quantity) {
+function updateProductOrderQuantityAndPrice(
+  order_id,
+  product_id,
+  quantity,
+  product_price,
+) {
   return new Promise((resolve, reject) => {
     db.run(
-      `UPDATE products_order SET quantity = ? WHERE order_id = ? AND product_id = ? `,
-      [quantity, order_id, product_id],
-      (error, row) => {
+      `UPDATE products_order SET quantity = ?, product_price = ? WHERE order_id = ? AND product_id = ? `,
+      [quantity, product_price, order_id, product_id],
+      function (error) {
         if (error) {
           reject(error)
           return
         }
-        resolve(row)
+        resolve(this.changes)
       },
     )
   })
@@ -85,7 +90,7 @@ function getProductsOrderByOrderId(order_id) {
 module.exports = {
   postProductOrder,
   searchOrderIdAndProductId,
-  updateProductOrderQuantity,
+  updateProductOrderQuantityAndPrice,
   getProductOrders,
   getProductsOrderByOrderId,
 }
