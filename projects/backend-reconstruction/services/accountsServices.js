@@ -28,6 +28,19 @@ async function postAccount(login, password) {
   return account
 }
 
+async function getAccountById(id) {
+  if (!Number.isInteger(id) || id <= 0) {
+    throw new AppError('Invalid id', 400)
+  }
+  const account = await accountsRepositorie.getAccountById(id)
+
+  if (!account) {
+    throw new AppError('Account not found', 404)
+  }
+  return account
+}
+
 module.exports = {
   postAccount,
+  getAccountById,
 }

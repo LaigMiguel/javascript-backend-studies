@@ -20,6 +20,23 @@ function postAccount(login, password) {
   })
 }
 
+function getAccountById(id) {
+  return new Promise((resolve, reject) => {
+    db.get(
+      'SELECT id, login FROM accounts WHERE id = ?',
+      [id],
+      (error, row) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(row)
+      },
+    )
+  })
+}
+
 module.exports = {
   postAccount,
+  getAccountById,
 }
