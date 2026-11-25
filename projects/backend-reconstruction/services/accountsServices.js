@@ -40,7 +40,52 @@ async function getAccountById(id) {
   return account
 }
 
+async function getAccountByLogin(login) {
+  if (typeof login !== 'string' || login.trim() === '' || login.includes(' ')) {
+    throw new AppError('Invalid login', 400)
+  }
+
+  const account = await accountsRepositorie.getAccountByLogin(login)
+
+  if (!account) {
+    throw new AppError('Account not found', 404)
+  }
+
+  return account
+}
+
+async function getAccountCredentialsByLogin(login, password) {
+  if (typeof login !== 'string' || login.trim() === '' || login.includes(' ')) {
+    throw new AppError('Invalid login', 400)
+  }
+  if (
+    typeof password !== 'string' ||
+    password.trim() === '' ||
+    password.includes(' ')
+  ) {
+    throw new AppError('Invalid password', 400)
+  }
+
+  const account = await accountsRepositorie.getAccountCredentialsByLogin(login)
+  if (!account) {
+    throw new AppError('Account not found', 404)
+  }
+
+  const isValid = await bcrypt.compare(password, account.password)
+
+  if (!isValid) {
+    throw new AppError('Invalid login or password', 401)
+  }
+
+  return {
+    id: account.id,
+    login: account.login,
+  }
+}
+
 module.exports = {
   postAccount,
   getAccountById,
+  getAccountByLogin,
+  getAccountCredentialsByLogin,
 }

@@ -20,7 +20,32 @@ async function getAccountById(req, res, next) {
   }
 }
 
+async function getAccountByLogin(req, res, next) {
+  try {
+    const { login } = req.body
+    const account = await accountsService.getAccountByLogin(login)
+    return res.status(200).json(account)
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function getAccountCredentialsByLogin(req, res, next) {
+  try {
+    const { login, password } = req.body
+    const account = await accountsService.getAccountCredentialsByLogin(
+      login,
+      password,
+    )
+    return res.status(200).json(account)
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   postAccount,
   getAccountById,
+  getAccountByLogin,
+  getAccountCredentialsByLogin,
 }
